@@ -1,0 +1,10 @@
+DROP TABLE [dbo].[Gifts];
+DROP TABLE [dbo].[CallLogs];
+DROP TABLE [dbo].[UserProfiles];
+DROP TABLE [dbo].[Constituents];
+DROP TABLE [dbo].[ProposedConstituentsChanges];
+--DROP TABLE [dbo].[AspNetUserRoles];
+--DROP TABLE [dbo].[AspNetUserLogins];
+--DROP TABLE [dbo].[AspNetUserClaims];
+--DROP TABLE [dbo].[AspNetRoles];
+--DROP TABLE [dbo].[AspNetUsers];

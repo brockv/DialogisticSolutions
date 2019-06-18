@@ -1,0 +1,120 @@
+﻿@model Dialogistic.Models.Constituent
+
+@{
+    ViewBag.Title = "Propose Constituent Changes";
+}
+
+<h2>Propose Constituent Changes</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Submit changes to this Constituent for review</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ConstituentID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PrimaryAddressee, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PrimaryAddressee, new { htmlAttributes = new { @class = "form-control", style = "max-width: 500px;" } })
+                @Html.ValidationMessageFor(model => model.PrimaryAddressee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredAddressLine1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredAddressLine1, new { htmlAttributes = new { @class = "form-control", style = "max-width: 500px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredAddressLine1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredAddressLine2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredAddressLine2, new { htmlAttributes = new { @class = "form-control", style = "max-width: 500px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredAddressLine2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredAddressLine3, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredAddressLine3, new { htmlAttributes = new { @class = "form-control", style = "max-width: 500px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredAddressLine3, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredCity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredCity, new { htmlAttributes = new { @class = "form-control", style = "max-width: 500px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredCity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredState, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredState, new { htmlAttributes = new { @class = "form-control", style = "max-width: 150px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredState, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PreferredZIP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PreferredZIP, new { htmlAttributes = new { @class = "form-control", style = "max-width: 100px;" } })
+                @Html.ValidationMessageFor(model => model.PreferredZIP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", style = "max-width: 200px;" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MobilePhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MobilePhoneNumber, new { htmlAttributes = new { @class = "form-control", style = "max-width: 200px;" } })
+                @Html.ValidationMessageFor(model => model.MobilePhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AlternatePhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AlternatePhoneNumber, new { htmlAttributes = new { @class = "form-control", style = "max-width: 200px;" } })
+                @Html.ValidationMessageFor(model => model.AlternatePhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deceased, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Deceased)
+                    @Html.ValidationMessageFor(model => model.Deceased, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="submit" value="Submit changes for review" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="~/Voice/Index/@Model.ConstituentID">Back to call panel</a>
+</div>

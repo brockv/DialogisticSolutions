@@ -1,0 +1,305 @@
+﻿@model Dialogistic.Models.Constituent
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<section class="content-header">
+    <h2>
+        Update Constituent
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="~/Constituents/Index"><i class="fa fa-dashboard"></i>Manage Constituents</a></li>
+        <li class="active">Update Constituent</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update This Constituents Information</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" method="post" action="~/Constituents/UpdateConstituent">
+
+            @Html.HiddenFor(model => model.ConstituentID)
+
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Primary Addressee</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PrimaryAddressee" placeholder="@Model.PrimaryAddressee" value="@Model.PrimaryAddressee">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress1" class="col-sm-2 control-label">Preferred Address 1</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PreferredAddressLine1" placeholder="@Model.PreferredAddressLine1" value="@Model.PreferredAddressLine1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2" class="col-sm-2 control-label">Preferred Address 2</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PreferredAddressLine2" placeholder="@Model.PreferredAddressLine2" value="@Model.PreferredAddressLine2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress3" class="col-sm-2 control-label">Preferred Address 3</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PreferredAddressLine3" placeholder="@Model.PreferredAddressLine3" value="@Model.PreferredAddressLine3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputState" class="col-sm-2 control-label">Preferred State</label>
+                    <div id="divStates" class="col-sm-10">
+                        <input type="hidden" name="country" id="countryId" value="US" />
+                        <select name="PreferredState" class="states order-alpha form-control" id="stateId">
+                            <option value="">Select State</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCity" class="col-sm-2 control-label">Preferred City</label>
+                    <div class="col-sm-10">
+                        <select name="PreferredCity" class="cities order-alpha form-control" id="cityId">
+                            <option value="">Select City</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputZIP" class="col-sm-2 control-label">Preferred ZIP</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PreferredZIP" placeholder="@Model.PreferredZIP" value="@Model.PreferredZIP">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="PhoneNumber" placeholder="@Model.PhoneNumber" value="@Model.PhoneNumber">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMobilePhone" class="col-sm-2 control-label">Mobile Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="MobilePhoneNumber" placeholder="@Model.MobilePhoneNumber" value="@Model.MobilePhoneNumber">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAltPhone" class="col-sm-2 control-label">Alternate Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="AlternatePhoneNumber" placeholder="@Model.AlternatePhoneNumber" value="@Model.AlternatePhoneNumber">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputUniversityRelationship" class="col-sm-2 control-label">University Relationship</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="UniversityRelationship" placeholder="@Model.UniversityRelationship" value="@Model.UniversityRelationship">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDeceased" class="col-sm-2 control-label">Deceased</label>
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.Deceased)
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-info">Update Information</button>
+                </div>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+    <!-- /.box -->
+</section>
+
+<!-- DROPDOWNS FOR STATE / CITY -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function ajaxCall() {
+        this.send = function (data, url, method, success, type) {
+            type = type || 'json';
+            var successRes = function (data) {
+                success(data);
+            }
+
+            var errorRes = function (e) {
+                console.log(e);
+            }
+            jQuery.ajax({
+                url: url,
+                type: method,
+                data: data,
+                success: successRes,
+                error: errorRes,
+                dataType: type,
+                timeout: 60000
+            });
+
+        }
+
+    }
+
+    function locationInfo() {
+        var rootUrl = "//geodata.solutions/api/api.php";
+        //set default values
+        var username = 'demo';
+        var ordering = 'name';
+        //now check for set values
+        var addParams = '';
+        if (jQuery("#gds_appid").length > 0) {
+            addParams += '&appid=' + jQuery("#gds_appid").val();
+        }
+        if (jQuery("#gds_hash").length > 0) {
+            addParams += '&hash=' + jQuery("#gds_hash").val();
+        }
+
+        var call = new ajaxCall();
+
+        this.confCity = function (id) {
+            var url = rootUrl + '?type=confCity&countryId=' + jQuery('#countryId').val() + '&stateId=' + jQuery('#stateId option:selected').attr('stateid') + '&cityId=' + id;
+            var method = "post";
+            var data = {};
+            call.send(data, url, method, function (data) {
+                if (data) {
+                    //    alert(data);
+                }
+                else {
+                    //   alert('No data');
+                }
+            });
+        };
+
+        this.getCities = function (id) {
+            jQuery(".cities option:gt(0)").remove();
+            //get additional fields
+            var stateClasses = jQuery('#cityId').attr('class');
+            //console.log(stateClasses);
+            var cC = stateClasses.split(" ");
+            cC.shift();
+            var addClasses = '';
+            if (cC.length > 0) {
+                acC = cC.join();
+                addClasses = '&addClasses=' + encodeURIComponent(acC);
+            }
+            var url = rootUrl + '?type=getCities&countryId=' + jQuery('#countryId').val() + '&stateId=' + id + addParams + addClasses;
+            var method = "post";
+            var data = {};
+            jQuery('.cities').find("option:eq(0)").html("Please wait..");
+            call.send(data, url, method, function (data) {
+                jQuery('.cities').find("option:eq(0)").html("Select City");
+                if (data.tp == 1) {
+                    if (data.hits > 1000) {
+                        //alert('Free usage far exceeded. Please subscribe at geodata.solutions.');
+                        console.log('Daily geodata.solutions request limit exceeded:' + data.hits + ' of 1000');
+                    }
+                    else {
+                        console.log('Daily geodata.solutions request count:' + data.hits + ' of 1000')
+                    }
+
+                    var listlen = Object.keys(data['result']).length;
+                    //console.log('number is cities is ' + listlen);
+                    if (listlen > 0) {
+                        jQuery.each(data['result'], function (key, val) {
+
+                            var option = jQuery('<option />');
+                            option.attr('value', val).text(val);
+                            jQuery('.cities').append(option);
+                        });
+                    }
+                    else {
+                        var usestate = jQuery('#stateId option:selected').val();
+                        var option = jQuery('<option />');
+                        option.attr('value', usestate).text(usestate);
+                        option.attr('selected', 'selected');
+                        jQuery('.cities').append(option);
+                    }
+
+                    jQuery(".cities").prop("disabled", false);
+
+                    $('#cityId').val("@Model.PreferredCity").attr("selected", "selected");
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
+        };
+
+        this.getStates = function (id) {
+            jQuery(".states option:gt(0)").remove();
+            jQuery(".cities option:gt(0)").remove();
+            //get additional fields
+            var stateClasses = jQuery('#stateId').attr('class');
+            console.log(stateClasses);
+            var cC = stateClasses.split(" ");
+            cC.shift();
+            var addClasses = '';
+            if (cC.length > 0) {
+                acC = cC.join();
+                addClasses = '&addClasses=' + encodeURIComponent(acC);
+            }
+            var url = rootUrl + '?type=getStates&countryId=' + id + addParams + addClasses;
+            var method = "post";
+            var data = {};
+            jQuery('.states').find("option:eq(0)").html("Please wait..");
+            call.send(data, url, method, function (data) {
+                jQuery('.states').find("option:eq(0)").html("Select State");
+                if (data.tp == 1) {
+                    if (data.hits > 1000) {
+                        //alert('Free usage far exceeded. Please subscribe at geodata.solutions.');
+                        console.log('Daily geodata.solutions request limit exceeded: ' + data.hits + ' of 1000.');
+                    }
+                    else {
+                        console.log('Daily geodata.solutions request count:' + data.hits + ' of 1000')
+                    }
+                    jQuery.each(data['result'], function (key, val) {
+                        var option = jQuery('<option />');
+                        option.attr('value', val).text(val);
+                        option.attr('stateid', key);
+                        jQuery('.states').append(option);
+                    });
+                    jQuery(".states").prop("disabled", false);
+
+                    $('#stateId').val("@Model.PreferredState").attr("selected", "selected");
+
+                    var loc = new locationInfo();
+                    var stateId = jQuery("option:selected", ".states").attr('stateid');
+                    if (stateId != '') {
+                        loc.getCities(stateId);
+                    }
+                    
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
+        };
+    }
+
+    jQuery(function () {
+        var loc = new locationInfo();
+        var coid = jQuery("#countryId").val();
+        loc.getStates(coid);
+        jQuery(".states").on("change", function (ev) {
+            var stateId = jQuery("option:selected", this).attr('stateid');
+            if (stateId != '') {
+                loc.getCities(stateId);
+            }
+            else {
+                jQuery(".cities option:gt(0)").remove();
+            }
+        });
+        jQuery(".cities").on("change", function (ev) {
+            var cityId = jQuery("option:selected", this).val();
+            if (cityId != '') {
+                loc.confCity(cityId);
+            }
+        });
+    });       
+</script>

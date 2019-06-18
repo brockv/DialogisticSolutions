@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Dialogistic.Models.UserProfile>
+
+@{
+    ViewBag.Title = "Manage Callers";
+}
+
+<section class="content-header">
+    <h2>
+        Manage Callers
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Manage Callers</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Update Caller Roles</h3>
+            </div>
+            <div class="box-body">
+                <table id="Constituents" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Caller</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.FullName</td>
+                                <td>@Html.Partial("_ManageCallersPartial", item)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

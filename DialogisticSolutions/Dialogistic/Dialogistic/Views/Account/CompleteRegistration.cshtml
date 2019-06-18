@@ -1,0 +1,113 @@
+﻿@model Dialogistic.Models.CompleteRegistrationViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Complete Your Registration";
+    Layout = null;
+}
+
+    <head>
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="/Content/theme/css/standard.css">
+        <!-- JQuery bundle -->
+        @Scripts.Render("~/bundles/jquery")
+    </head>
+    <style>
+        .content-wrapper, .main-footer, .main-header .navbar{
+            margin: 0;
+        }
+        .container{
+            margin: 0 auto;
+            padding-top: 50px;
+            max-width: 800px;
+        }
+        body{background: #ecf0f5}
+    </style>
+<body>
+    <div class="content-wrapper registration container">
+        <section class="content-header">
+            <h1>
+                Account Registration
+            </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Complete Your Account Registration</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("CompleteRegistration", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <div class="box-body">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.UserID)
+                            @Html.HiddenFor(model => model.Code)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-info">Complete Registration</button>
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                }
+            </div>
+            <!-- /.box -->
+        </section>
+    </div>
+    <footer class="main-footer">
+        <!-- Default to the left -->
+        <strong>&copy; @DateTime.Now.Year - Dialogistic Solutions.</strong> All rights reserved.
+    </footer>
+</body>
+
+<script src="~/dist/js/adminlte.min.js"></script>

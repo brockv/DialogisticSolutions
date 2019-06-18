@@ -1,0 +1,56 @@
+﻿@{
+    var userIsAdmin = User.IsInRole("Administrator") || User.IsInRole("SuperAdmin");
+}
+
+<section class="content-header">
+    <h1>
+        Import CSV
+    </h1>
+    <ol class="breadcrumb">
+        @if (userIsAdmin)
+        {
+            <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        else
+        {
+            <li><a href="~/StandardUsers/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        <li class="active">Import CSV</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Select A CSV File To Import</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        @using (Html.BeginForm("Import", "CSV", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            @Html.TextBox("file", "", new { @class = "form-control", type = "file", style = "max-width: 500px;" }) <br />
+                            @ViewBag.Message
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    string redirect = "
+                    <script>window.open('http://www.google.com');</script>";
+                    Response.Write(redirect);
+                    <button type="submit" id="updateButton" class="btn btn-info">Import File</button>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        }
+    </div>
+    <!-- /.box -->
+</section>

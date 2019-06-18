@@ -1,0 +1,32 @@
+﻿@RenderSection("Scripts", required: false)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Dialogistic Solutions</title>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/style.css">
+
+
+</head>
+<body>
+
+    <!-- JQuery bundle -->
+    @Scripts.Render("~/bundles/jquery")
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="justify-content-center">
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+﻿/*
+    @Discription: We wanted to create an inclusive experiance for the end user and to this efect after researching many colorblind tools for viewing what a site would look like for colorblind users we found an article published by Medium written by Allison Ofisher that gave solid options for color choices.
+
+    @Title: Inclusive Color Palettes for the Web
+    @Author: Allison Ofisher
+    @Published: May 18, 2018
+    @Source: https://medium.com/cafe-pixo/inclusive-color-palettes-for-the-web-bbfe8cf2410e
+*/
+@import "_core.scss";
+@import "_colorblindColors.scss";
+
+// General
+.palette {
+
+    .cp1 {
+        background-color: $cp1;
+    }
+
+    .cp2 {
+        background-color: $cp2;
+    }
+
+    .cp3 {
+        background-color: $cp3;
+    }
+
+    .cp4 {
+        background-color: $cp4;
+    }
+
+    .cp5 {
+        background-color: $cp5;
+    }
+}
+
+.logo-lg, .logo-mini {
+    color: white;
+
+    b {
+        color: black;
+    }
+}
+
+h1 {
+    color: $cp5;
+}
+
+h2 {
+    color: $cp2;
+}
+
+h3 {
+    color: $cp4;
+}
+
+h4 {
+    color: $cp4;
+}
+
+h5 {
+    color: $cp5;
+}
+
+h6 {
+    color: $cp2;
+}
+
+.content-wrapper{
+    background: white;
+}
+
+
+hr {
+    border-top: 1px solid rgba($cp2, .2);
+}
+//
+// Chatlog
+#cometchat_chatboxes_wide .cometchat_tab, .cometchat_tabtitle, .cometchat_userstabtitle, #cometchat_tabcontainer .cometchat_tab_clicked, #cometchat_userstab {
+    background: $cp6 !important;
+}
+
+#cometchat .cometchat_self, #cometchat .selfMsgArrow .after {
+    background: $cp6 !important;
+}
+//
+// Content Section
+.main-header .sidebar-toggle {
+    color: $cp6;
+
+    &:hover {
+        color: $cp2;
+    }
+}
+
+div#blockColorblindContent{
+    display: none;
+}
+
+.main-header .sidebar-toggle:focus {
+    color: $cp6;
+}
+
+a {
+    color: $cp6;
+
+    &:hover {
+        color: $cp5;
+    }
+}
+
+div, p {
+    color: black;
+}
+
+.main-header {
+    background: $cp2;
+}
+
+.main-sidebar {
+    background: $cp6;
+}
+
+.navbar.navbar-static-top {
+    background: $cp3;
+}
+
+
+//
+// Box
+.box {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-top-color: $cp2;
+    margin-top: 20px;
+}
+
+.box.box-info {
+    border-top-color: $cp2;
+}
+
+.box-body {
+    border: none;
+    padding: 0;
+}
+
+.box-header {
+    padding: 10px 0;
+}
+
+.box-footer {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+h3.box-title, .box-header > .fa, .box-header > .glyphicon, .box-header > .ion, .box-header .box-title {
+    color: $cp5;
+}
+
+.small-box {
+    * {
+        color: black !important;
+    }
+
+    .fa{
+        color: rgba(black, .1) !important;
+    }
+}
+
+.small-box.bg-aqua {
+    background: rgba($cp3, .5) !important;
+}
+
+.small-box.bg-green {
+    background: rgba($cp1, .5) !important;
+}
+
+.small-box.bg-red {
+    background: rgba($cp5, .5) !important;
+}
+/* Constituent Status Color Key */
+.donorKey li {
+    color: black;
+}
+
+.atRisk {
+    background: rgba($cp5, .2) !important;
+}
+
+.lapsing {
+    background: rgba($cp3, .2) !important;
+}
+
+.lapsed {
+    background: rgba($cp4, .3) !important;
+}
+
+.lost {
+    background: rgba($cp2, .5) !important;
+}
+
+.neverDonor {
+    background: rgba($cp6,.5) !important;
+}
+
+.retained {
+    background: rgba($cp1, .3) !important;
+}
+
+//
+// Tables
+table caption {
+    background: lighten($cp3,5%);
+}
+
+th {
+    background: $cp2;
+}
+
+tr:hover {
+    background: $cp1;
+}
+
+tr:nth-child(even), .table-striped > tbody > tr:nth-of-type(2n+1) {
+    background: $even;
+}
+
+tr:nth-child(odd), tr:nth-child(2n) {
+    background: $odd;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border-color: $cp6;
+    vertical-align: middle;
+}
+
+.table-bordered {
+    border: none;
+}
+
+td {
+    color: $cp6;
+    a{
+        @extend .btn;
+    }
+}
+
+.bg-purple{
+    background: $cp6 !important;
+}
+
+//
+// Form Elements
+.form-control {
+    background: none;
+    border-color: $cp6;
+    color: $cp6;
+}
+
+td .form-group:last-of-type {
+    margin: 0;
+}
+
+.btn-info, .btn, input[type="submit"], button, html input[type="button"], input[type="reset"] {
+    box-shadow: none;
+    padding: 5px 10px;
+    background: none;
+    color: $cp6;
+    border: 1px solid $cp6;
+    @include font-size(16px);
+
+    &:hover {
+        background: $cp2;
+        border-color: $cp2;
+        color: white;
+    }
+}
+
+.btn-info.disabled.focus, .btn-info.disabled:focus, .btn-info.disabled:hover, .btn-info[disabled].focus, .btn-info[disabled]:focus, .btn-info[disabled]:hover, fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:focus, fieldset[disabled] .btn-info:hover {
+    background: $cp1;
+    border-color: $cp1;
+}
+
+input[name="file"] {
+    padding: 0;
+}
+
+.form-control:focus {
+    border-color: $cp5;
+}
+//
+// Sidebar
+.sidebar-menu > li > a {
+    color: white;
+}
+
+.sidebar-menu > li > a:hover {
+    background: lighten($cp5, 10%);
+}
+
+.info p {
+    color: $cp2;
+}
+
+.sidebar-form, .sidebar-menu > li.header {
+    background: $cp2;
+    color: black;
+}
+
+//
+// Paigination
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: $cp2 !important;
+    border-color: $cp2 !important;
+}
+//
+// Footer
+.main-footer {
+    background: $cp2;
+    border-top: 1px solid rgba($cp1, .2);
+    color: white;
+
+}
+
+@import "_print.scss";

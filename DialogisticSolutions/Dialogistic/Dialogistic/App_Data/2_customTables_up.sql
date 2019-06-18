@@ -1,0 +1,100 @@
+
+--------------------------------------------------------
+----                                                  --
+----              TABLE CREATION SECTION              --
+----                                                  --
+--------------------------------------------------------
+
+--  --CREATE TABLE [dbo].[UserProfiles](
+--  --	[ProfileID]		  INT IDENTITY (1, 1)	NOT NULL,
+--  --	[UserID]		  NVARCHAR (128) UNIQUE NOT NULL,
+--  --	[UserName]        NVARCHAR (256)		NOT NULL,
+--  --	[FullName]        NVARCHAR (256)		NOT NULL,
+--  --	[Email]           NVARCHAR (256)		NULL,
+--  --	[Avatar]		  NVARCHAR (MAX)		NULL,
+--  --	[SiteTheme]		  NVARCHAR (100)	    NULL,
+--  --	[IsCaller]		  BIT					NOT NULL,
+--  --	[TotalCallsMade]  INT					NULL,
+--  --	[CallsRemaining]  INT					NULL,
+--  --	[DonationsRaised] DECIMAL (19, 2)		NULL,	  
+--  --	CONSTRAINT [PK_dbo.UserProfiles] PRIMARY KEY CLUSTERED ([ProfileID] ASC),
+--  --  CONSTRAINT [FK_dbo.UserProfiles_dbo.AspNetUsers_UserId] FOREIGN KEY ([UserID]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE
+--  --);
+
+--CREATE TABLE [dbo].[Constituents](
+--    [ConstituentID]			  INT              NOT NULL,
+--    [PrimaryAddressee]		  NVARCHAR (100)   NULL,
+--    [PreferredAddressLine1]	  NVARCHAR (100)   NOT NULL,
+--    [PreferredAddressLine2]   NVARCHAR (100)   NULL,
+--    [PreferredAddressLine3]   NVARCHAR (100)   NULL,
+--    [PreferredCity]           NVARCHAR (50)    NOT NULL,
+--    [PreferredState]		  NVARCHAR (50)    NOT NULL,
+--    [PreferredZIP]			  NVARCHAR (20)    NOT NULL,
+--    [PhoneNumber]			  NVARCHAR (50)    NOT NULL,
+--    [MobilePhoneNumber]		  NVARCHAR (50)    NULL,
+--    [AlternatePhoneNumber]	  NVARCHAR (50)    NULL,
+--    [Deceased]				  BIT              NOT NULL,
+--    [DonationStatus]		  NVARCHAR (20)    NULL,
+--    [UniversityRelationship]  NVARCHAR (20)    NULL,
+--    [CallPriority]			  INT              NULL,
+--	[Latitude]				  DECIMAL(9,6)	   NULL,
+--	[Longitude]				  DECIMAL(9,6)	   NULL,
+--    CONSTRAINT [PK_dbo.Constituents] PRIMARY KEY CLUSTERED ([ConstituentID] ASC),
+--);
+
+--CREATE TABLE [dbo].[ProposedConstituentsChanges](
+--    [ConstituentID]			  INT              NOT NULL,
+--    [PrimaryAddressee]		  NVARCHAR (100)   NULL,
+--    [PreferredAddressLine1]	  NVARCHAR (100)   NOT NULL,
+--    [PreferredAddressLine2]   NVARCHAR (100)   NULL,
+--    [PreferredAddressLine3]   NVARCHAR (100)   NULL,
+--    [PreferredCity]           NVARCHAR (50)    NOT NULL,
+--    [PreferredState]		  NVARCHAR (50)    NOT NULL,
+--    [PreferredZIP]			  NVARCHAR (20)    NOT NULL,
+--    [PhoneNumber]			  NVARCHAR (50)    NOT NULL,
+--    [MobilePhoneNumber]		  NVARCHAR (50)    NULL,
+--    [AlternatePhoneNumber]	  NVARCHAR (50)    NULL,
+--    [Deceased]				  BIT              NOT NULL,
+--    [DonationStatus]		  NVARCHAR (20)    NULL,
+--    [UniversityRelationship]  NVARCHAR (20)    NULL,
+--    [CallPriority]			  INT              NULL,
+--	[Latitude]				  DECIMAL(9,6)	   NULL,
+--	[Longitude]				  DECIMAL(9,6)	   NULL,
+--    CONSTRAINT [PK_dbo.ProposedConstituentsChanges] PRIMARY KEY CLUSTERED ([ConstituentID] ASC),
+--);
+
+--  CREATE TABLE [dbo].[CallLogs](
+--  	[CallID]			INT IDENTITY (1, 1) NOT NULL,
+--  	[CallerID]			NVARCHAR (128)	  NOT NULL,
+--  	[ConstituentID]		INT				  NOT NULL,
+--  	[DateOfCall]		DATE			  NOT NULL,
+--  	[CallAnswered]		BIT				  NOT NULL,
+--  	[LineAvailable]		BIT				  NOT NULL,	
+--  	[CallOutcome]		NVARCHAR (128)	  NULL,
+--  	CONSTRAINT [PK_dbo.CallLogs] PRIMARY KEY CLUSTERED ([CallID] ASC),
+--  	CONSTRAINT [FK_dbo.CallLogs_dbo.AspNetUsers_UserId] FOREIGN KEY ([CallerID]) REFERENCES [dbo].[AspNetUsers]([Id]),
+--  	CONSTRAINT [FK_dbo.CallLogs_dbo.Constituents_ConsituentID] FOREIGN KEY ([ConstituentID]) REFERENCES [dbo].[Constituents] ([ConstituentID])
+--  );
+
+--  CREATE TABLE [dbo].[CallAssignments] (
+--    [CallerID]		NVARCHAR (128)	 NOT NULL,
+--    [ConstituentID]	INT				 NOT NULL,
+--    [CallLogID]	INT				 NULL,
+--    CONSTRAINT [PK_dbo.CallAssignments] PRIMARY KEY CLUSTERED ([CallerID] ASC, [ConstituentID] ASC),
+--    CONSTRAINT [FK_dbo.CallAssignments.Constituents_ConstituentID] FOREIGN KEY ([ConstituentID]) REFERENCES [dbo].[Constituents] ([ConstituentID]),
+--    CONSTRAINT [FK_dbo.CallAssignments.UserProfiles_UserID] FOREIGN KEY ([CallerID]) REFERENCES [dbo].[UserProfiles] ([UserID]),
+--    CONSTRAINT [FK_dbo.CallAssignments.CallLogs_CallID] FOREIGN KEY ([CallLogID]) REFERENCES [dbo].[CallLogs] ([CallID])
+--  );
+
+--CREATE TABLE [dbo].[Gifts](
+--	[GiftID]			INT IDENTITY (1, 1) NOT NULL,
+--	[ConstituentID]		INT				    NOT NULL,
+--	[CallID]			INT					NOT NULL,
+--    [Printed]			BIT					NOT NULL,
+--    [GiftAmount]		DECIMAL (19, 2)		NULL,
+--    [GiftType]			NVARCHAR (128)		NULL,
+--    [GiftRecipient]		NVARCHAR (128)		NULL,
+--	CONSTRAINT [PK_dbo.Gifts] PRIMARY KEY CLUSTERED ([GiftID] ASC),
+--	CONSTRAINT [FK_dbo.Gifts_dbo.Constituents_ConsituentID] FOREIGN KEY ([ConstituentID]) REFERENCES [dbo].[Constituents] ([ConstituentID]),
+--	CONSTRAINT [FK_dbo.Gifts_dbo.CallLogs_CallID] FOREIGN KEY ([CallID]) REFERENCES [dbo].[CallLogs] ([CallID])
+--);

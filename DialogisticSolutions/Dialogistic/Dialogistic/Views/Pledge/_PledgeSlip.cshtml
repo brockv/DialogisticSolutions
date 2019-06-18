@@ -1,0 +1,109 @@
+﻿
+@model Dialogistic.Models.PledgeVM
+
+<section id="pledge">
+    <div class="row">
+        @*Column Left*@
+        <div class="col-md-8">
+            <h1 class="cm-graphic">Yes, I want to grow WOU today.</h1>
+            <label>Enclosed is my one-time gift of:</label>
+            <table>
+                <tr>
+                    <td class="cm-graphic" style="min-width: 80px;">Other:</td>
+                    <td class="underline">@Model.PledgeAmmount</td>
+                </tr>
+            </table>
+            <label>I choose to support:</label>
+            <table>
+                <tr>
+                    <td class="cm-graphic" style="min-width: 150px;"></>Greatest Need</td>
+                    <td class="cm-graphic">Other:</td>
+                    <td class="underline"></td>
+                </tr>
+            </table>
+            <div class="row">
+                @*Inner column left*@
+                <div class="col-md-6">
+                    <table>
+                        <caption>Primary Address</caption>
+                        <tr>
+                            <td>Name:</td>
+                            <td class="underline">@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td class="underline">@Model.PAddress</td>
+                        </tr>
+                        <tr>
+                            <td>City/State/ZIP:</td>
+                            <td class="underline">@Model.City @Model.State, @Model.Zip</td>
+                        </tr>
+                    </table>
+                </div>
+                @*Inner column right*@
+                <div class="col-md-6">
+                    <table>
+                        <caption>Billing Address</caption>
+                        <tr>
+                            <td>Name:</td>
+                            <td class="underline"></td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td class="underline"></td>
+                        </tr>
+                        <tr>
+                            <td>City/State/ZIP:</td>
+                            <td class="underline"></td>
+                        </tr>
+
+
+                    </table>
+                    <table class="credit-card">
+                        <caption>Credit Card</caption>
+                        <tr>
+                            <td>Card #:</td>
+                            <td class="underline"></td>
+                        </tr>
+                        <tr>
+                            <td style="min-width: 25%;">Exp. Date:</td>
+                            <td class="underline"></td>
+                        </tr>
+                        <tr>
+                            <td>V-code:</td>
+                            <td class="underline"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table><tr><td>Email:</td><td class="underline"></td></tr></table>
+            <table><tr><td class="hear" style="min-width: 280px;">How did you hear about us?</td><td class="underline">You spoke with @Model.CallerName on the phone.</td></tr></table>
+
+        </div>
+
+        @*Column Right*@
+        <div class="col-md-4">
+            <div class="box">
+                <h6>Join the WOU Sustainer program.</h6>
+                <p>To provide dependable monthly support for Western Oregon University, I'd like to become a WOU Sustainer.</p>
+                <p>Pleas charge my credit card (listed at left) the following amount every month:</p>
+                <ul class="checkbox-block">
+                    <li class="cm-graphic">$25</li>
+                    <li class="cm-graphic">$50</li>
+                    <li class="cm-graphic">$85</li>
+                    <li class="cm-graphic">$100</li>
+                    <li class="cm-graphic">$200</li>
+                </ul>
+                <table><tr><td>Other:</td><td class="underline"></td></tr></table>
+                <p class="footnote">Note: You can change your plan or opt out at any time.</p>
+            </div>
+            <p>For info, to give a gift by phone or make a gift of stock, contact Emily Swart at 503-838-8814.</p>
+            <h3>wou.edu/give</h3>
+
+            <img src="~/Content/theme/imgs/wouLogo.png" />
+        </div>
+    </div>
+</section>
+
+<hr />

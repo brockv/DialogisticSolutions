@@ -1,0 +1,452 @@
+﻿/*=======================
+       Imports
+========================*/
+@import url("https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway:200,400,400i,900,900i");
+
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    color: #666;
+    font-size: 16px;
+}
+
+.rounded {
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+.content-wrapper {
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.content-header, .content {
+    padding: 0;
+}
+
+.content {
+    padding: 20px 0;
+}
+
+.main-footer {
+    margin-bottom: 0;
+}
+
+.wrapper {
+    margin-bottom: 0 !important;
+}
+
+.bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body {
+    background: #C6DEA6 !important;
+}
+
+    .bg-green .inner *, .callout.callout-success .inner *, .alert-success .inner *, .label-success .inner *, .modal-success .modal-body .inner * {
+        color: white;
+    }
+
+.bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
+    background: #9BC1BC !important;
+}
+
+    .bg-aqua .inner *, .callout.callout-info .inner *, .alert-info .inner *, .label-info .inner *, .modal-info .modal-body .inner * {
+        color: white;
+    }
+
+.skin-blue .main-header .navbar, .skin-blue .main-header .logo {
+    background: #ED6A5A !important;
+}
+
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    background: #2c3035 !important;
+}
+
+.skin-blue .sidebar-menu > li.header {
+    background: #151719 !important;
+}
+
+.skin-blue .sidebar-menu > li > a:hover {
+    background: #151719 !important;
+}
+
+.sidebar-toggle:hover {
+    background: #e8402c !important;
+}
+
+.main-footer {
+    background: #463F3A !important;
+    color: #C6DEA6;
+}
+
+    .main-footer * {
+        color: #C6DEA6;
+    }
+
+.logo-lg, .logo-mini {
+    padding: 4px 0;
+}
+
+    .logo-lg *, .logo-mini * {
+        color: white;
+    }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Julius Sans One", sans-serif;
+    font-weight: 300;
+    margin: 0;
+    line-height: 1.5em;
+}
+
+h1 {
+    font-size: 36px;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #463F3A;
+    text-transform: uppercase;
+    line-height: 1em;
+}
+
+    h1.page-header {
+        display: none;
+    }
+
+h2 {
+    font-size: 28px;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: #ED6A5A;
+}
+
+h3 {
+    font-size: 26px;
+    font-size: 1.625rem;
+    font-weight: 400;
+    color: #717C89;
+}
+
+h4 {
+    font-size: 20px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #C6DEA6;
+}
+
+h5 {
+    font-size: 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ED6A5A;
+}
+
+h6 {
+    font-size: 18px;
+    font-size: 1.125rem;
+    color: #9BC1BC;
+    font-weight: 800;
+}
+
+.footnote p {
+    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.headers * {
+    font-family: "Julius Sans One", sans-serif !important;
+}
+
+.headers li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+    .headers li:before {
+        display: none !important;
+    }
+
+.larger {
+    font-size: 125px;
+    font-size: 7.8125rem;
+    text-transform: uppercase;
+}
+
+.palette {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 20px 0 !important;
+}
+
+    .palette ul {
+        clear: left;
+        float: left;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        left: 50%;
+        text-align: center;
+    }
+
+    .palette li {
+        display: block;
+        float: left;
+        list-style: none;
+        position: relative;
+        right: 50%;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        list-style: none;
+        color: white;
+        display: inline-block;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+        .palette li:before {
+            display: none !important;
+        }
+
+        .palette li:last-child {
+            margin-right: 0;
+        }
+
+        .palette li p {
+            color: white;
+            position: absolute;
+            font-size: 20px;
+            font-size: 1.25rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    .palette .cp1 {
+        background-color: #ED6A5A;
+    }
+
+    .palette .cp2 {
+        background-color: #463F3A;
+    }
+
+    .palette .cp3 {
+        background-color: #9BC1BC;
+    }
+
+    .palette .cp4 {
+        background-color: #C6DEA6;
+    }
+
+    .palette .cp5 {
+        background-color: #717C89;
+    }
+
+.content-wrapper div, .content-wrapper p {
+    color: #666;
+    font-size: 16px;
+    font-size: 1rem;
+    margin: 0 0 1em;
+    line-height: 1.65em;
+    font-weight: 400;
+    font-family: "Raleway", sans-serif;
+}
+
+content-wrapper div:last-child, .content-wrapper p:last-child {
+    margin-bottom: 1em;
+}
+
+i, em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+b, strong {
+    font-weight: 800;
+    color: #C6DEA6;
+}
+
+a {
+    text-decoration: none;
+    -webkit-transition: color 0.3s ease;
+    -moz-transition: color 0.3s ease;
+    -o-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+    color: #9BC1BC;
+}
+
+    a:hover {
+        color: #ED6A5A;
+    }
+
+    a:hover, a:focus {
+        text-decoration: none;
+    }
+
+blockquote {
+    border: none;
+    margin: 0 0 20px;
+    padding: 20px 20px 20px 60px;
+    position: relative;
+    font-size: 20px;
+    font-size: 1.25rem;
+    color: #463F3A;
+    line-height: 1.8em;
+    font-weight: 800;
+    position: relative;
+}
+
+    blockquote:before {
+        content: "\201C";
+        font-size: 80px;
+        font-size: 5rem;
+        position: absolute;
+        left: 0;
+        top: 30px;
+    }
+
+    blockquote p {
+        font-size: 22px;
+        font-size: 1.375rem;
+        color: #463F3A;
+        line-height: 40px;
+    }
+
+        blockquote p:last-child {
+            margin: 0;
+        }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    border: 0;
+    width: 100%;
+    margin-bottom: 20px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    overflow: hidden;
+}
+
+    table caption {
+        padding: 15px;
+        background: #ED6A5A;
+        color: white;
+        font-weight: 800;
+    }
+
+    table th {
+        padding: 10px 15px;
+        background: #463F3A;
+        color: white;
+        font-weight: 500;
+    }
+
+    table tr:hover {
+        background: #c4c4c4;
+    }
+
+    table tr:nth-child(even) {
+        background: #fcfcfc;
+    }
+
+    table tr:nth-child(odd) {
+        background: #f5f5f5;
+    }
+
+    table td {
+        padding: 5px 15px;
+    }
+
+.main-header .logo {
+    height: 56px;
+}
+
+.main-sidebar {
+    padding-top: 56px;
+}
+
+.tab-navigation {
+    margin-bottom: 40px;
+}
+
+#mapid {
+    height: 400px;
+}
+
+/* Table Key */
+
+.atRisk {
+    background: rgba(63, 191, 191, .2) !important;
+}
+
+.lapsing {
+    background: rgba(191, 191, 63, .2) !important;
+}
+.lapsed {
+    background: rgba(191, 127, 63, .3) !important;
+}
+
+.lost {
+    background: rgba(191, 63, 63, .2) !important;
+}
+
+.neverDonor {
+    background: rgba(0,0,0,.2) !important;
+}
+
+.retained {
+    background: rgba(63, 191, 127, .3) !important;
+}
+
+.donorKey li {
+    padding: 5px 10px;
+    border: solid 1px rgba(0,0,0,.2);
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    font-size: 14px;
+}
+.donorKey {
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+}
+
+body, html {
+    overflow: auto;
+    min-height: 100%;
+}
+
+#cometchat_chatboxes_wide .cometchat_tab, .cometchat_tabtitle, .cometchat_userstabtitle, #cometchat_tabcontainer .cometchat_tab_clicked, #cometchat_userstab {
+    background: #ED6A5A !important;
+}
+
+#cometchat .cometchat_self, #cometchat .selfMsgArrow .after {
+    background: #9BC1BC !important;
+}
+
+/* 
+    These two .centered classes are for centering modal windows.
+    They're currently being used in the ~/Voice/Index view.
+*/
+.centered-modal.in {
+    display: flex !important;
+}
+
+.centered-modal .modal-dialog {
+    margin: auto;
+}

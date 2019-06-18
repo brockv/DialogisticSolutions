@@ -1,0 +1,152 @@
+﻿@model Dialogistic.Models.ChargeModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link href="@Url.Content("~/Styles/style.css")" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="row">
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.Message
+                    
+                    @ViewBag.CallNext
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.ActionLink("Call Another Constituent >", "GetNextCallAssignment", "Voice")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @ViewBag.NextConstituent
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="row">
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        }
+        <!-- The Modal -->
+        <div class="modal" id="pmtModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Payment Information</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form action="/pledge/charge" method="post" id="payment-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="pledgeAmount">Pledge Amount</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                    </div>
+                                    <input id="pledgeAmount" class="form-control" type="number" name="pledgeAmount" />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="card-element">
+                                    Credit or debit card
+                                </label>
+                                <div id="card-element" style="width: 30em; height: 3em;">
+                                    <!-- A Stripe Element will be inserted here. -->
+                                </div>
+
+                                <!-- Used to display Element errors. -->
+                                <div id="card-errors" style="width: 30em; height: 2em;" role="alert"></div>
+                            </div>
+
+                            <button>Submit Payment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            var stripe = Stripe('@System.Configuration.ConfigurationManager.AppSettings["StripePublishableKey"]');
+            var elements = stripe.elements();
+            var style = {
+                base: {
+                    // Add your base input styles here. For example:
+                    fontSize: '16px',
+                    color: "#32325d",
+                }
+            };
+            $('#pmtModal').on('show.bs.modal',
+                function(event) {
+                    $('#pledgeAmount').val($('#Amount').val());
+                });
+            // Create an instance of the card Element.
+            var card = elements.create('card', { style: style });
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+            card.addEventListener('change', function (event) {
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                console.log(token);
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
+            }
+        });
+    </script>
+</body>
+</html>

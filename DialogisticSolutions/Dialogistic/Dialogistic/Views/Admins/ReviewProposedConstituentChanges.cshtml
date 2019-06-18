@@ -1,0 +1,194 @@
+﻿@model Dialogistic.Models.ReviewChangesModel
+
+@{
+    ViewBag.Title = "Review Proposed Constituent Changes";
+}
+
+<section class="content-header">
+    <h2>
+        Proposed Constituent Changes
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Review Constituent Changes</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Review Changes Submitted by Callers</h3>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <tr>
+                        <th>@Html.Label("Addressee")</th>
+                        <th>@Html.Label("Primary Address")</th>
+                        <th>@Html.Label("Address 2")</th>
+                        <th>@Html.Label("Address 3")</th>
+                        <th>@Html.Label("City")</th>
+                        <th>@Html.Label("State")</th>
+                        <th>@Html.Label("ZIP")</th>
+                        <th>@Html.Label("Phone Number")</th>
+                        <th>@Html.Label("Mobile Number")</th>
+                        <th>@Html.Label("Alt. Number")</th>
+                        <th>@Html.Label("Deceased")</th>
+                        <th>@Html.Label("University Relationship")</th>
+
+                        <th></th>
+                    </tr>
+
+                    @for (var i = 0; i < Model.Constituents.Count(); i++)
+                    {
+                        <!-- Print an entire row of an original entry -->
+                        <tr>
+                            <td><label>@Model.Constituents[i].PrimaryAddressee</label></td>
+                            <td><label>@Model.Constituents[i].PreferredAddressLine1</label></td>
+                            <td><label>@Model.Constituents[i].PreferredAddressLine2</label></td>
+                            <td><label>@Model.Constituents[i].PreferredAddressLine3</label></td>
+                            <td><label>@Model.Constituents[i].PreferredCity</label></td>
+                            <td><label>@Model.Constituents[i].PreferredState</label></td>
+                            <td><label>@Model.Constituents[i].PreferredZIP</label></td>
+                            <td><label>@Model.Constituents[i].PhoneNumber</label></td>
+                            <td><label>@Model.Constituents[i].MobilePhoneNumber</label></td>
+                            <td><label>@Model.Constituents[i].AlternatePhoneNumber</label></td>
+                            <td><label>@Html.Raw(@Model.Constituents[i].Deceased ? "YES" : "NO")</label></td>
+                            <td><label>@Model.Constituents[i].UniversityRelationship</label></td>
+                        </tr>
+
+                        <!-- Print an entire row of a changed entry -->
+                        <tr>
+                            <!-- Compare Primary Addressee fields -->
+                            @if (Model.Constituents[i].PrimaryAddressee != Model.ConstituentChanges[i].PrimaryAddressee)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PrimaryAddressee</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PrimaryAddressee</label></td>
+                            }
+
+                            <!-- Compare Preferred Address 1 fields -->
+                            @if (Model.Constituents[i].PreferredAddressLine1 != Model.ConstituentChanges[i].PreferredAddressLine1)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredAddressLine1</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredAddressLine1</label></td>
+                            }
+
+                            <!-- Compare Preferred Address 2 fields -->
+                            @if (Model.Constituents[i].PreferredAddressLine2 != Model.ConstituentChanges[i].PreferredAddressLine2)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredAddressLine2</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredAddressLine2</label></td>
+                            }
+
+                            <!-- Compare Preferred Address 3 fields -->
+                            @if (Model.Constituents[i].PreferredAddressLine3 != Model.ConstituentChanges[i].PreferredAddressLine3)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredAddressLine3</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredAddressLine3</label></td>
+                            }
+
+                            <!-- Compare the Preferred City fields-->
+                            @if (Model.Constituents[i].PreferredCity != Model.ConstituentChanges[i].PreferredCity)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredCity</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredCity</label></td>
+                            }
+
+                            <!-- Compare the Preferred State fields-->
+                            @if (Model.Constituents[i].PreferredState != Model.ConstituentChanges[i].PreferredState)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredState</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredState</label></td>
+                            }
+
+                            <!-- Compare the Preferred ZIP fields-->
+                            @if (Model.Constituents[i].PreferredZIP != Model.ConstituentChanges[i].PreferredZIP)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PreferredZIP</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PreferredZIP</label></td>
+                            }
+
+                            <!-- Compare the Phone Number fields-->
+                            @if (Model.Constituents[i].PhoneNumber != Model.ConstituentChanges[i].PhoneNumber)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].PhoneNumber</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].PhoneNumber</label></td>
+                            }
+
+                            <!-- Compare the Mobile Phone Number fields-->
+                            @if (Model.Constituents[i].MobilePhoneNumber != Model.ConstituentChanges[i].MobilePhoneNumber)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].MobilePhoneNumber</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].MobilePhoneNumber</label></td>
+                            }
+
+                            <!-- Compare the Alternate Phone Number fields-->
+                            @if (Model.Constituents[i].AlternatePhoneNumber != Model.ConstituentChanges[i].AlternatePhoneNumber)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].AlternatePhoneNumber</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].AlternatePhoneNumber</label></td>
+                            }
+
+                            <!-- Compare the Deceased fields-->
+                            @if (Model.Constituents[i].Deceased != Model.ConstituentChanges[i].Deceased)
+                            {
+                                <td class="danger"><label>@Html.Raw(@Model.ConstituentChanges[i].Deceased ? "YES" : "NO")</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Html.Raw(@Model.ConstituentChanges[i].Deceased ? "YES" : "NO")</label></td>
+                            }
+
+                            <!-- Compare the Deceased fields-->
+                            @if (Model.Constituents[i].UniversityRelationship != Model.ConstituentChanges[i].UniversityRelationship)
+                            {
+                                <td class="danger"><label>@Model.ConstituentChanges[i].UniversityRelationship</label></td>
+                            }
+                            else
+                            {
+                                <td><label>@Model.ConstituentChanges[i].UniversityRelationship</label></td>
+                            }
+
+                            <!-- ROW ACTIONS (Should only be generated in ConstituentChanges entry rows) -->
+                            <td>
+                                @Html.ActionLink("Approve", "ApproveConstituentChanges", new { id = Model.ConstituentChanges[i].ConstituentID }) |
+                                @Html.ActionLink("Deny", "DenyConstituentChanges", new { id = Model.ConstituentChanges[i].ConstituentID })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

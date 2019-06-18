@@ -1,0 +1,21 @@
+﻿@model Dialogistic.Models.ChangeUserRoleModel
+
+@using (Html.BeginForm("ManageAllUsers", "Admins", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.HiddenFor(model => model.User.Avatar)
+    @Html.HiddenFor(model => model.User.CallsRemaining)
+    @Html.HiddenFor(model => model.User.DonationsRaised)
+    @Html.HiddenFor(model => model.User.Email)
+    @Html.HiddenFor(model => model.User.FullName)
+    @Html.HiddenFor(model => model.User.IsCaller)
+    @Html.HiddenFor(model => model.User.ProfileID)
+    @Html.HiddenFor(model => model.User.TotalCallsMade)
+    @Html.HiddenFor(model => model.User.UserID)
+    @Html.HiddenFor(model => model.User.UserName)
+    @Html.DropDownListFor(model => model.Role, new SelectList(ViewBag.Roles, "Value", "Text"),
+        new { @class = "form-control col-sm-2", onchange = "this.form.submit()", style = "max-width: 500px;" })
+    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+</div>
+
+}

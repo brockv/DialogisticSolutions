@@ -1,0 +1,22 @@
+﻿---- DROP TABLE CONSTRAINTS
+--ALTER TABLE [dbo].[Constituents] DROP CONSTRAINT [PK_dbo.Constituents];
+--ALTER TABLE [dbo].[ProposedConstituentsChanges] DROP CONSTRAINT [PK_dbo.ProposedConstituentsChanges];
+--ALTER TABLE [dbo].[UserProfiles] DROP CONSTRAINT [PK_dbo.UserProfiles];
+--ALTER TABLE [dbo].[UserProfiles] DROP CONSTRAINT [FK_dbo.UserProfiles_dbo.AspNetUsers_UserId];
+--ALTER TABLE [dbo].[CallLog] DROP CONSTRAINT [PK_dbo.CallLog];
+--ALTER TABLE [dbo].[CallLog] DROP CONSTRAINT [FK_dbo.CallLog_dbo.AspNetUsers_UserId];
+--ALTER TABLE [dbo].[CallLog] DROP CONSTRAINT [FK_dbo.CallLog_dbo.Constituents_ConsituentID];
+--ALTER TABLE [dbo].[CallAssignments] DROP CONSTRAINT [PK_dbo.CallAssignments];
+--ALTER TABLE [dbo].[CallAssignments] DROP CONSTRAINT [FK_dbo.CallAssignments.Constituents_ConstituentID];
+--ALTER TABLE [dbo].[CallAssignments] DROP CONSTRAINT [FK_dbo.CallAssignments.UserProfiles_UserID];
+--ALTER TABLE [dbo].[CallAssignments] DROP CONSTRAINT [FK_dbo.CallAssignments.CallLog_CallID];
+--ALTER TABLE [dbo].[Gifts] DROP CONSTRAINT [PK_dbo.CallLog];
+--ALTER TABLE [dbo].[Gifts] DROP CONSTRAINT [FK_dbo.Gifts_dbo.Constituents_ConsituentID];
+--ALTER TABLE [dbo].[Gifts] DROP CONSTRAINT [FK_dbo.Gifts_dbo.CallLog_CallID];
+
+---- DROP TABLES
+--DROP TABLE [dbo].[CallAssignments];
+--DROP TABLE [dbo].[CallDetails];
+--DROP TABLE [dbo].[Constituents];
+--DROP TABLE [dbo].[ProposedConstituentsChanges];
+--DROP TABLE [dbo].[UserProfiles];

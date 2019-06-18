@@ -1,0 +1,66 @@
+﻿@model Dialogistic.Models.IndexViewModel
+
+@{
+    var userIsAdmin = User.IsInRole("Administrator") || User.IsInRole("SuperAdmin");
+}
+
+<section class="content-header">
+    <h2>
+        Manage Account Settings
+    </h2>
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <ol class="breadcrumb">
+        @if (userIsAdmin)
+        {
+            <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        else
+        {
+            <li><a href="~/StandardUsers/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        <li class="active">Account Settings Overview</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Update Your Account Settings</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" style="text-align:right;">Account Infomation:</label>
+                    <div class="col-md-9">
+                        @Html.ActionLink("Update Account Info", "UpdateUserProfile", "Manage")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" style="text-align:right;">Password:</label>
+                    <div class="col-md-9">
+                        
+                        @if (Model.HasPassword)
+                        {
+                            @Html.ActionLink("Change your password", "ChangePassword")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Create", "SetPassword")
+                        }
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" style="text-align:right;">Pentesting Report:</label>
+                    <div class="col-md-9">
+                        @Html.ActionLink("View Report", "PentestingReport", "Home")
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</section>

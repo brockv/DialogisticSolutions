@@ -1,0 +1,8 @@
+﻿@model Dialogistic.Models.UserProfile
+
+@using (Html.BeginForm("ManageCallers", "Admins", FormMethod.Post))
+{
+     <div class="form-group">
+         <button type="submit" name="userID" value="@Model.UserID" class="btn btn-default"> Make Admin </button>
+     </div>
+}

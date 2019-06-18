@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Dialogistic.Models.CallAssignment>
+
+<section class="content-header">
+    <h2>
+        Call List
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/StandardUsers/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">View Call List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="the-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">View Your Call List</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="Constituents" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Primary Addressee</th>
+                                <th>Phone Number</th>
+                                <th>Mobile Phone Number</th>
+                                <th>Alternate Phone Number</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null) { 
+                                foreach (var item in Model)
+                                {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Constituent.PrimaryAddressee)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Constituent.PhoneNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Constituent.MobilePhoneNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Constituent.AlternatePhoneNumber)</td>
+                                <td><a href="~/Voice/Index/@item.ConstituentID">Call</a></td>
+                            </tr>
+                                }
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>

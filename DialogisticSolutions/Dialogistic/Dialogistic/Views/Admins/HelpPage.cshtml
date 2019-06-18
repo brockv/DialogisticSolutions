@@ -1,0 +1,125 @@
+﻿@{
+
+                ViewBag.Title = "HelpPage";
+}
+
+<section class="content-header">
+    <h2>
+        Welcome Administrator!
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Help</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">General Help and Guidelines</h3>
+            </div>
+
+            <div>
+                <h6>Description of options</h6>
+
+                <p>
+                    <br />
+                    <a href="~/Admins/ManageCallList"><i class="fa fa-address-card"></i> <span>Manage Call List:</span></a>
+                    <br />
+                    Generate call assignments for callers.
+                    Constitutents can also be manually re-assigned to different callers both individually or in whole blocks if selected.
+                    The current automatic assignment uses various aspects of each constituent's donation history and the callers own success
+                    at obtaining donation's to create good matches.
+                </p>
+
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <p>
+                        <br />
+                        <a href="~/Admins/ManageAllUsers"><i class="fa fa-address-card"></i> <span>Manage Users:</span></a>
+                        <br />
+                        Change the permissions of standard users i.e. callers into those of an administrator or vice versa!
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        <br />
+                        <a href="~/Admins/ManageCallers"><i class="fa fa-address-card"></i> <span>Manage Callers:</span></a>
+                        <br />
+                        Change the permissions of standard users i.e. callers into those of an administrator!
+                    </p>
+                }
+
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <p>
+                        <br />
+                        <a href="~/Constituents/Index"><i class="fa fa-group"></i> <span>Manage Constituents:</span></a>
+                        <br />
+                        Determine the donation status of various constitutents in the database as well as search for individual constituents. Search results for constituents can be expanded from the basic set of attributes into having additional details shown such as full address,
+                        other phone numbers, or simply have everything revealed at once. Search results can be constricted to select groups of specified donation status. One can also update the information on a constituent if desired via the "update" action.
+                        Finally, there is functionality for importing appropriate CSV files of constituents data into the site's database as well as exporting the database contents in the same form of CSV file.
+
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        <br />
+                        <a href="~/Constituents/Index"><i class="fa fa-group"></i> <span>Manage Constituents:</span></a>
+                        <br />
+                        Determine the donation status of various constitutents in the database as well as search
+                        for individual constituents. Search results for constituents can be expanded from the basic set of attributes into having additional details shown such as full address,
+                        other phone numbers, or simply have everything revealed at once. Search results can be constricted to select groups of specified donation status.
+                        Finally, there is functionality for importing appropriate CSV files of constituents data into the site's database as well as exporting the database contents in the same form of CSV file.
+                    </p>
+                }
+
+                <p>
+                    <br />
+                    <a href="~/Admins/ReviewProposedConstituentChanges"><i class="fa fa-group"></i> <span>Review Constituent Changes:</span></a>
+                    <br />
+                  Approve or deny updates to a constituent's info suggested by a caller. This occurs when a standard user is in contact with a constituent, and the constituent's personal information has changed.
+                  The standard users are unable to physically change this information without your approval.
+                </p>
+
+                <p>
+                    <br />
+                    <a href="~/Pledge/Print"><i class="fa fa-print"></i> <span>Print Pledges:</span></a>
+                    <br />
+                    Print auto-generated pledge slips for specific constituents as an alternate
+                    method of obtaining donations from our constituents. This creates a PDF, of which prints
+                    out two pledge slips per page. This pledge slips can then be printed and mailed to the constituent, or they 
+                    can be saved to the hard disk.
+                </p>
+
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <p>
+                        <br />
+                        <a href="~/Constituents/New"><i class="fa fa-plus"></i> <span>Create New Constituent:</span></a>
+                        <br />
+                        Create and add new constituents to our database repository.
+                    </p>
+                }
+
+                <p>
+                    <br /><a href="~/User/Create"><i class="fa fa-user-plus"></i> <span>Create New User: </span></a>
+                    <br />
+                    Create new user accounts with the desired permissions and associated roles
+                </p>
+
+                <p>
+                    <br />
+                    <a href="~/Manage/Index"><i class="fa fa-gears"></i> <span>Settings:</span></a>
+                    <br />
+                    Use this option to @Html.ActionLink("update account info", "UpdateUserProfile", "Manage"), which can include changing your avatar, color theme, etc., @Html.ActionLink("change your password", "ChangePassword", "Manage"), and
+                    @Html.ActionLink("view a report", "PentestingReport", "Home") on the site's security.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Dialogistic.Models.PledgeVM>
+
+<section class="content-header">
+    <h2 class="print-hide">
+        Recent Pledges
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Print Pledges</li>
+    </ol>
+</section>
+
+<button onclick="javascript:window.print()" class="btn print-hide">Print</button>
+@Html.ActionLink("Clear List", "ClearPledges", "Pledge", null, new { @class = "btn print-hide" })
+
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <div class="row">
+        <div class="box-body">
+            <div class="box print">
+                @foreach (var item in Model)
+                {
+                    @Html.Partial("_PledgeSlip", item)
+                }
+            </div>
+        </div>
+    </div>
+</section>

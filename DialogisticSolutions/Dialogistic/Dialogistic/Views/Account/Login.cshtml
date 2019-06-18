@@ -1,0 +1,65 @@
+﻿@using Dialogistic.Models
+@model LoginViewModel
+
+<div class="bg-image"></div>
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LoginCustomLayout.cshtml";
+}
+
+<section class="login-wrapper">
+    <div class="login-content">
+
+        <section class="content-header container" style="vertical-align: central;">
+            <h2 class="login-logo"><b>Dialogistic</b>Solutions</h2>
+        </section>
+        <hr />
+        <!-- Main content -->
+        <section class="content container">
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h6 class="box-title">Please log in to your account to continue</h6>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="box-body">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                <input class="form-control" id="Email" name="Email" type="text" autocomplete="username" />
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                <input class="form-control" id="Password" name="Password" type="password" autocomplete="current-password" />
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Log in" class="btn btn-info" />
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <!-- /.box-footer -->
+                    </div>
+                }
+            </div>
+            <!-- /.box -->
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    <!-- JQuery bundle -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<link rel="stylesheet" href="/Content/theme/css/standard.css">

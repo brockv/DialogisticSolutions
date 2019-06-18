@@ -1,0 +1,155 @@
+﻿@model Dialogistic.Models.UserProfile
+
+<html>
+<body>
+    <section class="content-header">
+        <h2>
+            Dashboard
+            <small>Control panel</small>
+        </h2>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="the-content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <!-- Calls Remaining card -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>@Model.CallsRemaining</h3>
+                        <p>My Remaining Calls</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <a href="~/StandardUsers/ViewCallList" class="small-box-footer">View call list <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <!-- Total Donations Raised card -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>@String.Format("{0:C}", @Model.DonationsRaised)<sup style="font-size: 20px"></sup></h3>
+                        <p>My Total Donations Raised</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-money"></i>
+                    </div>
+                    <a href="~/Constituents/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <!-- The Call Team Donations card -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>@String.Format("{0:C}", @ViewBag.GroupTotal)<sup style="font-size: 20px"></sup></h3>
+                        <p>The Call Team Donation Pot</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-money"></i>
+                    </div>
+                    <a href="~/Constituents/Index" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <div class="tab-container">
+
+            <div class="tab-navigation">
+                <select id="select-box">
+                    <option value="1">Yearly Report</option>
+                    <option value="2">Monthly Report</option>
+                    <option value="3">Daily Report</option>
+                </select>
+            </div>
+
+            <div id="tab-1" class="tab-content">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Annual Gift Report:</label>
+                            <canvas id="YearlyLineChart" width="400" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-2" class="tab-content">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Monthly Gift Report:</label>
+                            <canvas id="MonthlyLineChart" width="400" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-3" class="tab-content">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Daily Gift Report:</label>
+                            <canvas id="DailyLineChart" width="400" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @section scripts {
+            <script src="~/Scripts/Chart.js"></script>
+            <script src="~/Scripts/Common.js"></script>
+            <script>
+
+                //----Yearly Report Chart---------
+                var c = document.getElementById("YearlyLineChart");
+                var ctx = c.getContext("2d");
+                var tData = $.getValues("/StandardUsers/CurrentYearlyReport");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: tData
+                });
+
+                //----Monthly Report Chart---------
+                var c = document.getElementById("MonthlyLineChart");
+                var ctx = c.getContext("2d");
+                var tData = $.getValues("/StandardUsers/CurrentMonthlyReport");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: tData
+                });
+
+                //----Daily Report Chart---------
+                var c = document.getElementById("DailyLineChart");
+                var ctx = c.getContext("2d");
+                var tData = $.getValues("/StandardUsers/CurrentDailyReport");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: tData
+                });
+
+                //hide all tabs first
+                $('.tab-content').hide();
+                //show the first tab content
+                $('#tab-1').show();
+
+                $('#select-box').change(function () {
+                    dropdown = $('#select-box').val();
+                    //first hide all tabs again when a new option is selected
+                    $('.tab-content').hide();
+                    //then show the tab content of whatever option value was selected
+                    $('#' + "tab-" + dropdown).show();
+                });
+
+            </script>
+        }
+    </section>
+</body>
+</html>

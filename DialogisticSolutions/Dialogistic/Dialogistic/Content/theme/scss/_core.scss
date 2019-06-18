@@ -1,0 +1,802 @@
+﻿// NOTE:: This is the core HTML styles that can be found on the Style Guide Page of the site.
+
+
+/*=======================
+       Imports
+========================*/
+@import url("https://fonts.googleapis.com/css?family=Julius+Sans+One|Raleway:200,400,400i,900,900i");
+@import '_mixins.scss';
+//
+// Font Familys
+//
+$special: 'Raleway';
+
+$headline: 'Raleway', "Times New Roman", Times, serif;
+
+$bodyCopy: 'Julius Snas One', Helvetica, Arial, "Lucida Grande", sans-serif;
+
+// Default items
+$radius: 8px;
+$fullradius: 100px;
+
+$text: #666;
+
+//
+// Core HTML
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+canvas {
+    max-width: 100%;
+}
+
+.rounded {
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+}
+
+.content-wrapper {
+    padding: 20px;
+    margin-bottom: 0;
+    padding-bottom: 60px;
+    position:relative;
+}
+
+.content-header, .content {
+    padding: 0;
+}
+
+.content {
+    padding: 20px 0;
+}
+
+.main-footer {
+    float: left;
+    width: 100%;
+}
+
+.wrapper {
+    margin-bottom: 0 !important;
+}
+
+.bg-green .inner *, .callout.callout-success .inner *, .alert-success .inner *, .label-success .inner *, .modal-success .modal-body .inner * {
+    color: white;
+}
+
+.bg-aqua .inner *, .callout.callout-info .inner *, .alert-info .inner *, .label-info .inner *, .modal-info .modal-body .inner * {
+    color: white;
+}
+
+html {
+    font-family: $bodyCopy;
+    font-weight: 400;
+    color: $text;
+    font-size: 16px;
+}
+
+body {
+    margin-top: 0px;
+}
+
+.wrapper, .container, .region-footer {
+    padding: 0;
+    margin: 0;
+}
+
+.ui-state-active .ui-icon .resizable-textarea .grippie, .element-invisible, div#skip-link, .toolbar-toggle-orientation {
+    display: none !important;
+}
+
+// This removes the padding on the main body content so that everything is flush to the sides of the window.
+.main-container > .row > .col-sm-12, .container-fluid {
+    padding: 0;
+}
+
+// Headers
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $headline;
+    font-weight: 300;
+    margin: 0;
+    line-height: 1.5em;
+    text-transform: uppercase;
+}
+
+h1 {
+    @include font-size(38px);
+    font-weight: 700;
+
+    &.page-header {
+        display: none;
+    }
+}
+
+h2 {
+    @include font-size(36px);
+    font-weight: 400;
+}
+
+h3 {
+    @include font-size(34px);
+    font-weight: 400;
+}
+
+h4 {
+    @include font-size(30px);
+    font-weight: 800;
+}
+
+h5 {
+    @include font-size(25px);
+    font-weight: 700;
+}
+
+h6 {
+    @include font-size(20px);
+    font-weight: 800;
+}
+
+.footnote p {
+    @include font-size(12px);
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.headers {
+    * {
+        font-family: $headline !important;
+        font-weight: 500;
+    }
+
+    li {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        &:before {
+            display: none !important;
+        }
+    }
+
+    .light {
+        font-weight: 200;
+    }
+
+    strong {
+        font-weight: 800;
+    }
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+//
+// Logo/Name
+//
+.navbar .logo {
+    max-width: 300px;
+    display: block;
+    float: left;
+}
+
+.logo-menu {
+    margin-bottom: 0 !important;
+}
+
+.navbar-header {
+    float: none;
+}
+
+.navbar-brand {
+    float: none;
+    height: auto;
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+.navbar-default {
+    background: none;
+    border: none;
+}
+
+.name {
+    display: none;
+}
+
+// Fix full width issue
+.nav-tabs {
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+.light {
+    font-weight: 100;
+}
+
+.bodycopy {
+    * {
+        font-family: $bodyCopy !important;
+    }
+
+    li {
+        margin: 0 !important;
+        padding: 0 !important;
+
+        &:before {
+            display: none !important;
+        }
+    }
+}
+
+.larger {
+    text-transform: none;
+    @include font-size(120px);
+    line-height: 120px;
+    margin-bottom: 0;
+}
+
+// Color Palette
+
+.palette {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px !important;
+
+    ul {
+        clear: left;
+        float: left;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        left: 50%;
+        text-align: center;
+    }
+
+    li {
+        display: block;
+        float: left;
+        list-style: none;
+        position: relative;
+        right: 50%;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        list-style: none;
+        color: white;
+        display: inline-block;
+        text-align: center;
+        margin-bottom: 20px;
+        margin-right: 20px;
+
+        &:before {
+            display: none !important;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        p {
+            color: white;
+            position: absolute;
+            @include font-size(20px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+// Paragraph Styles
+
+div, p {
+    color: $text;
+    @include font-size(18px);
+    margin: 0 0 1em;
+    line-height: 1.65em;
+    font-weight: 400;
+    font-family: $bodyCopy;
+
+    &:last-child {
+        margin-bottom: 1em;
+    }
+}
+
+#toolbar-bar {
+    * {
+        @include font-size(12px);
+        font-weight: 100;
+    }
+}
+
+.container div:last-child, container p:last-child {
+    margin: 0;
+}
+
+// .main-container .container div:last-child, .main-container .container p:last-child{
+//     margin: 1em;
+// }
+
+
+i, em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+b, strong {
+    font-weight: 800;
+}
+
+a {
+    text-decoration: none;
+    @include transition(color .3s ease);
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+//
+// Lists
+////// Ordered List
+.region-content ol {
+    list-style-type: none;
+    margin: 0;
+    margin-left: 0;
+    padding: 0;
+    counter-reset: li-counter;
+}
+
+.region-content ol > li {
+    position: relative;
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+.region-content ol > li:before {
+    position: absolute;
+    color: white;
+    top: 7px;
+    left: 0;
+    text-align: center;
+    font-weight: 400;
+    font-family: $bodyCopy;
+    content: counter(li-counter);
+    counter-increment: li-counter;
+    border-radius: 100%;
+    height: 15px;
+    width: 15px;
+    @include font-size(12px);
+    line-height: 1.3em;
+}
+
+//
+// Phone Call
+.client-controls {
+    input {
+        width: 100%;
+        display: block;
+    }
+
+    .stripe-container {
+        margin-top: 20px;
+
+        .btn {
+            margin: 0 !important;
+        }
+    }
+}
+
+[name="constituentNumber"]{
+    margin-bottom: 20px;
+}
+
+.multiselect-container {
+    width: 100%;
+    max-height: 174px;
+    overflow: scroll;
+    border-radius: 0;
+}
+//
+// Tables
+table {
+    border: 0;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+table caption {
+    padding: 15px;
+    color: white;
+}
+
+th {
+    padding: 10px 15px;
+    color: white;
+    font-weight: 500;
+}
+
+td {
+    padding: 5px 15px;
+    @include font-size(14px);
+    vertical-align: middle;
+}
+
+.main-header .logo {
+    height: 56px;
+}
+
+.main-sidebar {
+    padding-top: 56px;
+}
+
+.tab-navigation {
+    margin-bottom: 40px;
+}
+
+#mapid {
+    height: 300px;
+}
+
+
+.donorKey li {
+    padding: 5px 10px;
+    border: solid 1px rgba(0,0,0,.2);
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    font-size: 14px;
+}
+
+.donorKey {
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+}
+
+body, html {
+    overflow: visible;
+}
+
+.centered-modal.in {
+    display: flex !important;
+}
+
+.centered-modal .modal-dialog {
+    margin: auto;
+}
+
+.cometchat_recentmessage img {
+    max-width: 15px;
+}
+
+body #cometchat {
+    position: absolute;
+    bottom: 0;
+}
+
+#cometchat div {
+    margin-bottom: 0;
+}
+
+.cometchat_recentmessage img {
+}
+
+#cometchat_userstab {
+    height: auto;
+}
+
+.cometchat_userstabtitle {
+    margin: 0;
+}
+// Fixes
+.content-wrapper, .main-footer, .main-header .navbar {
+    margin-left: 22%;
+}
+
+.main-sidebar, .main-header .logo {
+    width: 22%;
+}
+
+@media (min-width: 1500px) {
+    .main-sidebar, .main-header .logo {
+        width: 13%;
+    }
+
+    .content-wrapper, .main-footer, .main-header .navbar {
+        margin-left: 13%;
+    }
+}
+
+
+@media (min-width: 1300px) {
+    .main-sidebar, .main-header .logo {
+        width: 15%;
+    }
+
+    .content-wrapper, .main-footer, .main-header .navbar {
+        margin-left: 15%;
+    }
+}
+
+.user-panel {
+    margin: 0;
+}
+
+.sidebar-menu > li > a {
+    @include font-size(14px);
+}
+
+.sidebar-collapse .image {
+    height: 30px;
+    width: 30px;
+}
+
+.sidebar-collapse {
+    .clock {
+        visibility: hidden;
+        height: 1px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.image {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+    display: block;
+    position: relative;
+}
+
+.image > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+}
+/*=======================
+       Pledges
+========================*/
+#pledge {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    .box {
+        border: none;
+        background: #dddbdb;
+        padding: 20px;
+    }
+
+    .cm-graphic:before {
+        content: "";
+        height: 15px;
+        width: 15px;
+        border: 1px solid #666;
+        display: block;
+        position: absolute;
+        left: 0;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .underline {
+        border-bottom: 1px solid #666;
+        width: 100%;
+        padding: 0;
+    }
+
+    .cm-graphic {
+        padding: 0 0 0 20px;
+        margin-right: 10px;
+        position: relative;
+    }
+
+    .checkbox-block {
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline-block;
+            list-style: none;
+        }
+    }
+
+    caption {
+        background: none;
+        color: #666;
+        padding: 0 0 10px 0;
+        border-bottom: 1px solid #666;
+        margin-bottom: 10px;
+    }
+
+    tr:nth-child(2n+1), tr:nth-child(2n) {
+        background: none;
+    }
+
+    td {
+        padding: 10px 10px 0 0;
+        line-height: 20px;
+        @include font-size(16px);
+        vertical-align: middle;
+        height: 29px;
+    }
+}
+
+.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-attrib {
+    display: none;
+}
+
+#map {
+    height: 300px;
+}
+//
+// Login page
+.bg-image {
+    height: 100%;
+    background-image: url("../imgs/meeting.jpg");
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.form-horizontal .form-group {
+    margin: 0 0 20px;
+}
+
+.justify-content-center {
+    margin-bottom: 0;
+}
+
+.justify-content-center > div {
+    margin-bottom: 0;
+}
+
+.login-wrapper {
+    position: relative;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .login-content {
+        @include border-radius(8px);
+        background: white;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 25%;
+        transform: translate(-50%, -50%);
+        -webkit-box-shadow: 10px 10px 53px 11px rgba(0,0,0,0.3);
+        -moz-box-shadow: 10px 10px 53px 11px rgba(0,0,0,0.3);
+        box-shadow: 10px 10px 53px 11px rgba(0,0,0,0.3);
+
+        h6 {
+            font-size: 1vw;
+        }
+
+        .container {
+            max-width: 100%;
+        }
+    }
+}
+
+.login-logo {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 2.35vw;
+}
+
+.mapboxgl-canary {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .login-wrapper .login-content {
+        width: 50%;
+        max-width: 100%;
+    }
+
+    .login-logo {
+        font-size: 4.9vw;
+    }
+
+    .login-wrapper .login-content h6 {
+        font-size: 1.9vw;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .login-wrapper .login-content {
+        width: 90%;
+        max-width: 100%;
+    }
+
+    .login-logo {
+        font-size: 8.35vw;
+    }
+
+    .login-wrapper .login-content h6 {
+        font-size: 6vw;
+    }
+}
+
+
+// Error Pages
+
+.error-page {
+    background: url(../imgs/generalError.png) no-repeat center 50px, #92DAFF;
+    background-size: 400px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    blockquote {
+        @include font-size(45px);
+        text-transform: uppercase;
+        line-height: 1.3em;
+        color: #4D4D62;
+        padding: 0;
+        border: none;
+        text-align: center;
+    }
+}
+.center-block {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+
+//
+// Modal Fix
+.modal{
+    margin: 0;
+}
+.modal-backdrop {
+    z-index: 1 !important;
+}
+
+.main-sidebar, .navbar-static-top {
+    z-index: 100;
+}
+
+.main-header{
+    z-index: 101;
+}

@@ -1,0 +1,68 @@
+﻿@model Dialogistic.Models.UserProfile
+
+
+<link href="~/Content/chosen/chosen.css" rel="stylesheet" />
+<script src="~/Content/chosen/chosen.jquery.js" type="text/javascript"></script>
+
+<!-- The Modal -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="modal-dialog modal-dialog-centered" id="userSelectorModal">
+            <div class="modal-content">
+
+                <!-- Modal header section -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="myModal-label">Select users to start your conversation with:</h3>
+                </div>
+
+                <!-- Modal body section -->
+                <div class="modal-body">
+
+                    @Html.DropDownListFor(x => x.ProfileID,
+                        Model.UserProfilesCollection.Select(x => new SelectListItem { Text = x.FullName, Value = x.ProfileID.ToString() }),
+                            new { @class = "form-control chosen-select", @multiple = true, id = "usersMultiselect",
+                                data_placeholder = "Search for users...", onchange = "enableDisableButton()" })
+
+                </div>
+
+                <!-- Modal footer section - contains the buttons -->
+                <div class="modal-footer form-group" id="userSelectorForm">
+                    <a class="chosen-toggle select" style="float:left; margin-right: 10px; cursor: pointer;" id="selectAll">Select All</a>
+                    <a class="chosen-toggle deselect" style="float:left; cursor: pointer;" id="deselectAll">Deselect All</a>
+                    <input type="button" class="btn btn-default" id="btnCancel" value="Cancel" data-dismiss="modal" />
+                    <input type="button" class="btn btn-primary" id="btnCreateConversation" value="Create Conversation" onclick="createConversationWithUsers()" disabled />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* Force the multiselect to fill the width of the div it's in */
+    var opts = {};
+    opts["width"] = '100%';
+    $(".chosen-select").chosen(opts);
+</script>
+
+<script type="text/javascript">
+    /* Enables or disables the 'Create Conversation' button based on current input */
+    function enableDisableButton() {
+        if (!document.getElementById("usersMultiselect").value.length) {
+            document.getElementById("btnCreateConversation").disabled = true;
+        } else {
+            document.getElementById("btnCreateConversation").disabled = false;
+        }
+    }
+
+    // Select and Deselect all users
+    $('#usersMultiselect').chosen();
+    $('.chosen-toggle').click(function () {
+        $('option').prop('selected', $(this).hasClass('select')).parent().trigger('chosen:updated');
+
+        /* Update the status of the 'Create Conversation' button */
+        enableDisableButton();
+    });
+</script>

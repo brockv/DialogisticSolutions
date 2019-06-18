@@ -1,0 +1,327 @@
+﻿@model Dialogistic.Models.Constituent
+
+<!-- Modal -->
+<div class="modal fade" id="updateInformation" tabindex="-1" role="dialog" aria-labelledby="updateInformationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateInformationLabel">Update Constituent Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form controller="~/Constituents" action="ProposeConstituentChanges">
+                    @Html.AntiForgeryToken()
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    @Html.HiddenFor(model => model.ConstituentID)
+
+                    <div class="form-group col-md-12">
+                        <label for="PrimaryAddressee">Primary Addressee</label>
+                        @Html.EditorFor(model => model.PrimaryAddressee, new { htmlAttributes = new { @class = "form-control" } })
+                        <div style="font-size:15px !important;">
+                            @Html.ValidationMessageFor(model => model.PrimaryAddressee, "", new { @class = "text-danger", style = "position:absolute;" })
+                        </div>
+                    </div>
+
+                    <label>Address:</label>
+                    <div class="box-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="PreferredAddress1">Preferred Address 1</label>
+                                @Html.EditorFor(model => model.PreferredAddressLine1, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredAddressLine1, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="PreferredState">Preferred State</label>
+                                <div id="divStates" class="col-sm-10">
+                                    <input type="hidden" name="country" id="countryId" value="US" />
+                                    <select name="PreferredState" class="states order-alpha form-control" id="stateId">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredState, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="PreferredAddress2">Preferred Address 2</label>
+                                @Html.EditorFor(model => model.PreferredAddressLine2, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredAddressLine2, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="PreferredCity">Preferred City</label>
+                                <div class="col-sm-10">
+                                    <select name="PreferredCity" class="cities order-alpha form-control" id="cityId">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredCity, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="PreferredAddress3">Preferred Address 3</label>
+                                @Html.EditorFor(model => model.PreferredAddressLine3, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredAddressLine3, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="PreferredZIP">Preferred ZIP</label>
+                                @Html.EditorFor(model => model.PreferredZIP, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PreferredZIP, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label>Telephone Numbers:</label>
+                    <div class="box-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="PhoneNumber">Primary Phone Number</label>
+                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="MobilePhoneNumber">Mobile Phone Number</label>
+                                @Html.EditorFor(model => model.MobilePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.MobilePhoneNumber, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="AlternatePhoneNumber">Alternate Phone Number</label>
+                                @Html.EditorFor(model => model.AlternatePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                <div style="font-size:15px !important;">
+                                    @Html.ValidationMessageFor(model => model.AlternatePhoneNumber, "", new { @class = "text-danger", style = "position:absolute;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label>Misc. Details:</label>
+                    <div class="box-body">
+                        <div class="form-group col-md-6">
+                            <label for="UniversityRelationship">University Relationship</label>
+                            @Html.EditorFor(model => model.UniversityRelationship, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check col-md-2">
+                            <input class="form-check-input" type="checkbox" id="Deceased" value="@Model.Deceased">
+                            <label class="form-check-label" for="Deceased">
+                                Deceased
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Submit Changes for Review</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DROPDOWNS FOR STATE / CITY -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function reloadLists() {
+        ajaxCall();
+    }
+
+    function ajaxCall() {
+        this.send = function (data, url, method, success, type) {
+            type = type || 'json';
+            var successRes = function (data) {
+                success(data);
+            }
+
+            var errorRes = function (e) {
+                console.log(e);
+            }
+            jQuery.ajax({
+                url: url,
+                type: method,
+                data: data,
+                success: successRes,
+                error: errorRes,
+                dataType: type,
+                timeout: 60000
+            });
+
+        }
+
+    }
+
+    function locationInfo() {
+        var rootUrl = "//geodata.solutions/api/api.php";
+        //set default values
+        var username = 'demo';
+        var ordering = 'name';
+        //now check for set values
+        var addParams = '';
+        if (jQuery("#gds_appid").length > 0) {
+            addParams += '&appid=' + jQuery("#gds_appid").val();
+        }
+        if (jQuery("#gds_hash").length > 0) {
+            addParams += '&hash=' + jQuery("#gds_hash").val();
+        }
+
+        var call = new ajaxCall();
+
+        this.confCity = function (id) {
+            var url = rootUrl + '?type=confCity&countryId=' + jQuery('#countryId').val() + '&stateId=' + jQuery('#stateId option:selected').attr('stateid') + '&cityId=' + id;
+            var method = "post";
+            var data = {};
+            call.send(data, url, method, function (data) {
+                if (data) {
+                    //    alert(data);
+                }
+                else {
+                    //   alert('No data');
+                }
+            });
+        };
+
+        this.getCities = function (id) {
+            jQuery(".cities option:gt(0)").remove();
+            //get additional fields
+            var stateClasses = jQuery('#cityId').attr('class');
+            //console.log(stateClasses);
+            var cC = stateClasses.split(" ");
+            cC.shift();
+            var addClasses = '';
+            if (cC.length > 0) {
+                acC = cC.join();
+                addClasses = '&addClasses=' + encodeURIComponent(acC);
+            }
+            var url = rootUrl + '?type=getCities&countryId=' + jQuery('#countryId').val() + '&stateId=' + id + addParams + addClasses;
+            var method = "post";
+            var data = {};
+            jQuery('.cities').find("option:eq(0)").html("Please wait..");
+            call.send(data, url, method, function (data) {
+                jQuery('.cities').find("option:eq(0)").html("Select City");
+                if (data.tp == 1) {
+                    if (data.hits > 1000) {
+                        //alert('Free usage far exceeded. Please subscribe at geodata.solutions.');
+                        console.log('Daily geodata.solutions request limit exceeded:' + data.hits + ' of 1000');
+                    }
+                    else {
+                        console.log('Daily geodata.solutions request count:' + data.hits + ' of 1000')
+                    }
+
+                    var listlen = Object.keys(data['result']).length;
+                    //console.log('number is cities is ' + listlen);
+                    if (listlen > 0) {
+                        jQuery.each(data['result'], function (key, val) {
+
+                            var option = jQuery('<option />');
+                            option.attr('value', val).text(val);
+                            jQuery('.cities').append(option);
+                        });
+                    }
+                    else {
+                        var usestate = jQuery('#stateId option:selected').val();
+                        var option = jQuery('<option />');
+                        option.attr('value', usestate).text(usestate);
+                        option.attr('selected', 'selected');
+                        jQuery('.cities').append(option);
+                    }
+
+                    jQuery(".cities").prop("disabled", false);
+
+                    $('#cityId').val("@Model.PreferredCity").attr("selected", "selected");
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
+        };
+
+        this.getStates = function (id) {
+            jQuery(".states option:gt(0)").remove();
+            jQuery(".cities option:gt(0)").remove();
+            //get additional fields
+            var stateClasses = jQuery('#stateId').attr('class');
+            console.log(stateClasses);
+            var cC = stateClasses.split(" ");
+            cC.shift();
+            var addClasses = '';
+            if (cC.length > 0) {
+                acC = cC.join();
+                addClasses = '&addClasses=' + encodeURIComponent(acC);
+            }
+            var url = rootUrl + '?type=getStates&countryId=' + id + addParams + addClasses;
+            var method = "post";
+            var data = {};
+            jQuery('.states').find("option:eq(0)").html("Please wait..");
+            call.send(data, url, method, function (data) {
+                jQuery('.states').find("option:eq(0)").html("Select State");
+                if (data.tp == 1) {
+                    if (data.hits > 1000) {
+                        //alert('Free usage far exceeded. Please subscribe at geodata.solutions.');
+                        console.log('Daily geodata.solutions request limit exceeded: ' + data.hits + ' of 1000.');
+                    }
+                    else {
+                        console.log('Daily geodata.solutions request count:' + data.hits + ' of 1000')
+                    }
+                    jQuery.each(data['result'], function (key, val) {
+                        var option = jQuery('<option />');
+                        option.attr('value', val).text(val);
+                        option.attr('stateid', key);
+                        jQuery('.states').append(option);
+                    });
+                    jQuery(".states").prop("disabled", false);
+
+                    $('#stateId').val("@Model.PreferredState").attr("selected", "selected");
+
+                    var loc = new locationInfo();
+                    var stateId = jQuery("option:selected", ".states").attr('stateid');
+                    if (stateId != '') {
+                        loc.getCities(stateId);
+                    }
+
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
+        };
+    }
+
+    jQuery(function () {
+        var loc = new locationInfo();
+        var coid = jQuery("#countryId").val();
+        loc.getStates(coid);
+        jQuery(".states").on("change", function (ev) {
+            var stateId = jQuery("option:selected", this).attr('stateid');
+            if (stateId != '') {
+                loc.getCities(stateId);
+            }
+            else {
+                jQuery(".cities option:gt(0)").remove();
+            }
+        });
+        jQuery(".cities").on("change", function (ev) {
+            var cityId = jQuery("option:selected", this).val();
+            if (cityId != '') {
+                loc.confCity(cityId);
+            }
+        });
+    });
+</script>

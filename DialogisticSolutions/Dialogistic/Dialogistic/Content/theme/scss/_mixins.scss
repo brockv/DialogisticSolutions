@@ -1,0 +1,161 @@
+﻿//
+// Mixins
+//
+
+@mixin box-shadow {
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.65);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.65);
+    box-shadow: 0px 0px 20px 0px rgba(50, 50, 50, 0.65);
+}
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+    background-clip: padding-box; /* stops bg color from leaking outside the border: */
+}
+
+@mixin text-shadow {
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, .5);
+}
+
+// Animation
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes
+    $animation-name
+
+{
+    @content;
+}
+
+@-moz-keyframes
+$animation-name
+
+{
+    @content;
+}
+
+@-ms-keyframes
+$animation-name
+
+{
+    @content;
+}
+
+@-o-keyframes
+$animation-name
+
+{
+    @content;
+}
+
+@keyframes
+$animation-name
+
+{
+    @content;
+}
+
+}
+
+@mixin animation($str) {
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
+}
+
+// Transitions
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+// Fonts
+
+@function calculateRem($size) {
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+    font-size: $size;
+    font-size: calculateRem($size);
+}
+
+// Set background image
+
+@mixin setBgColorAndHover($baseColor) {
+    background-color: $baseColor;
+
+    &:hover {
+        background-color: darken($baseColor, 10%);
+    }
+}
+
+// Flexbox commands
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex: $values;
+    -webkit-flex: $values;
+    -ms-flex: $values;
+    flex: $values;
+}
+
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+
+// Allows SCSS to use the following filter commands:
+// grayscale      ex: filter: grayscale(100%);
+// sepia          ex: filter: sepia(100%);
+// saturate       ex: filter: saturate(0%);
+// hue-rotate     ex: filter: hue-rotate(45deg);
+// invert         ex: filter: invert(100%);
+// brightness     ex: filter: brightness(15%);
+// contrast       ex: filter: contrast(200%);
+// blur           ex: filter: blur(2px);
+@mixin filter($filter-type,$filter-amount) {
+    -webkit-filter: unquote($filter-type+unquote('(#{$filter-amount})'));
+    -moz-filter: unquote($filter-type+unquote('(#{$filter-amount})'));
+    -ms-filter: unquote($filter-type+unquote('(#{$filter-amount})'));
+    -o-filter: unquote($filter-type+unquote('(#{$filter-amount})'));
+    filter: unquote($filter-type+unquote('(#{$filter-amount})'));
+}
+
+// Makes the calc command work through the compiler.
+@mixin calc($property, $expression) {
+    #{$property}: -moz-calc(#{$expression});
+    #{$property}: -o-calc(#{$expression});
+    #{$property}: -webkit-calc(#{$expression});
+    #{$property}: calc(#{$expression});
+}

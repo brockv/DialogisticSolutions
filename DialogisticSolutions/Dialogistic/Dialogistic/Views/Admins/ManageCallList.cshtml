@@ -1,0 +1,208 @@
+﻿@model IEnumerable<Dialogistic.Models.CallAssignment>
+
+@{
+    ViewBag.Title = "Manage Call List";    
+}
+
+
+<!-- Required scripts and stylesheet for the multiselect dropdown list -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link href="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+<section class="content-header">
+    <h2>
+        Call Assignments
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Manage Call List</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="the-content">
+    <div class="row">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Call Assignments Overview</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" id="refresh">
+                <table id="Constituents" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Constituent</th>
+                            <th>Caller</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Display each Constituent assigned to a Call Assignment, along with their assigned Caller -->
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="width: 50%;">@Html.DisplayFor(modelItem => item.Constituent.PrimaryAddressee)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CallerName)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <!-- form start -->
+            <!-- Create a button for admins to generate a list of call assignments -->
+            @using (Html.BeginForm("GenerateCallList", "Admins", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <!-- Disable the button if there are already call assignments -->
+                <button type="submit" disabled="@(Model.Count() != 0)" class="btn btn-info">Generate Call Assignments</button>
+                <label>@ViewBag.GenerateMessage</label>
+            }
+        </div>
+        <!-- /.box -->
+        <div class="box-header">
+            <h3 class="box-title">Edit Call Assignments</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="Constituents" class="table table-bordered table-striped" style="overflow: visible;">
+                <thead>
+                    <tr>
+                        <th>Constituent List</th>
+                        <th>Caller</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="width: 50%;">
+                            <!-- Create the multiselect dropdown list -->
+                            <select id="lstConstituents" multiple="multiple">
+                                <!-- Create an entry in the submenu for each Constituent currently in the CallAssignments table -->
+                                @foreach (var item in Model)
+                                {
+                                    <option value=@item.Constituent.ConstituentID>@item.Constituent.PrimaryAddressee</option>
+                                }
+                            </select>
+                        </td>
+                        <!-- Create a dropdown for the user to switch between Callers -->
+                        <td>
+                            @Html.DropDownList("UserID", new SelectList(ViewBag.Callers, "UserId", "FullName"),
+                                new { @class = "form-control", id = "lstCallers", onChange = "updateSelected()" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Create a button for the user to submit changes to a Caller's call assignments. Disable the button if there are no call assignments -->
+        <button type="button" disabled="@(Model.Count() == 0)" onclick="updateCallAssignments()" class="btn btn-info">Update Assignments For This Caller</button>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<script type="text/javascript">
+    // Do some setup when the document is fully loaded
+    $(function () {
+        // Set the options for the multiselect dropdown list
+        $('#lstConstituents').multiselect({
+            includeSelectAllOption: true,           // Allow the user to select/deselect all options
+            disableIfEmpty: true,                   // Disable the dropdown if it's empty
+            disabledText: 'No call assignments...'  // Text to display when disabled
+        });
+
+        // Call this once the page is loaded so the multiselect shows the appropriate information
+        updateSelected();
+
+        // Set the refresh interval for the AJAX functions
+        refreshPage()
+    });
+
+    /**
+     * Sets a refresh timer to the AJAX functions, updateSelected() and updateTable
+     * */
+    function refreshPage() {
+        /* Set the interval to 5 seconds */
+        var interval = 1000 * 5;
+
+        /* Apply the interval to the appropriate functions */
+        window.setInterval(updateTable, interval);
+    }
+
+    // Updates the chosen Caller's Call Assignments
+    function updateCallAssignments() {
+        // Get all the selected values from the list of Constituents
+        var selected = $("#lstConstituents option:selected");
+
+        // Build an array from the selected values to pass to the controller
+        var constituents = [];
+        selected.each(function () {
+            constituents.push($(this).val());
+        });
+
+        // Get the Caller this request is for
+        var callerID = document.getElementById("lstCallers").value;
+
+        // Create a JSON object to send to the controller
+        var model = { "CallerID": callerID, "Constituents": constituents };
+
+        // Send the request to the controller
+        $.ajax({
+            type: "POST",
+            url: "/Admins/UpdateCallerAssignments",
+            data: { model },
+            success: function (response) {
+                // Update the table to reflect changes
+                updateTable();
+            }
+        });
+    }
+
+    function updateTable() {
+        // Refresh the div that contains the full table of Call Assignments
+        $("#refresh").load("ManageCallList #refresh");
+    }
+
+    // Updates the multiselect dropdown list according to which Caller is selected
+    function updateSelected() {
+        // Get the Caller this request is for
+        var callerID = document.getElementById("lstCallers").value;
+
+        // Send the request to the controller
+        $.ajax({
+            type: "POST",
+            url: "/Admins/GetCallersAssignments",
+            data: { callerID },
+            success: function (response) {
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                //                                                                                          //
+                // If the request is successfull then update the selected values to match the chosen caller //
+                //                                                                                          //
+                //////////////////////////////////////////////////////////////////////////////////////////////
+
+                // Enable all checkboxes -- we do this so that we can manipulate previously disabled checkboxes
+                $('#lstConstituents option').each(function () {
+                    var input = $('input[value="' + $(this).val() + '"]');
+                    input.prop('disabled', false);
+                    input.parent('li').addClass('disabled');
+                });
+
+                // Deselect all checkboxes
+                $('#lstConstituents').multiselect('deselectAll', false);                
+
+                // Iterate over each value returned from the server
+                $.each(response.toString().split(","), function (i, e) {
+                    // Select each option whose value matches a value returned from the server
+                    $("#lstConstituents option[value='" + e + "']").prop("selected", true);
+                    $('#lstConstituents').multiselect('select', e);
+
+                    // Disabled selected options so that the user cannot unselect them -- prevents Call Assignments having no CallerID, which would crash
+                    var input = $('input[value="' + e + '"]');
+                    input.prop('disabled', true);
+                    input.parent('li').addClass('disabled');
+                });
+
+                // Update the button text to reflect the selected values
+                $('#lstConstituents').multiselect('updateButtonText');
+            }
+        });
+    }
+</script>

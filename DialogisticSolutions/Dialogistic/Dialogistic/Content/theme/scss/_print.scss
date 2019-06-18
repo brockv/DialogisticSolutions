@@ -1,0 +1,92 @@
+﻿@media print {
+    .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+        float: left;
+    }
+
+    .col-md-8 {
+        width: 66.66666667%;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .col-md-4 {
+        width: 33.33333333%;
+    }
+
+    .print-hide, footer, .cometchat_popup_overlay, #cometchat_userstab {
+        display: none !important;
+    }
+
+    #pledge {
+        padding: 0;
+        margin: 0;
+
+        * {
+            @include font-size(10px);
+        }
+
+        h1 {
+            font-size: 15px !important;
+        }
+
+        .cm-graphic:before {
+            height: 8px;
+            width: 8px;
+        }
+
+        .cm-graphic {
+            padding: 0 0 0 10px;
+        }
+
+        td {
+            @include font-size(10px);
+            height: auto;
+            line-height: 12px;
+        }
+
+        .box {
+            border: none;
+            padding: 10px;
+            background: #dddbdb !important;
+        }
+
+        table, .row {
+            margin-bottom: 0;
+        }
+
+        .credit-card {
+            td {
+                width: 30%;
+
+                &.underline {
+                    width: 100%;
+                }
+            }
+        }
+
+        caption {
+            margin-top: 10px;
+            padding-bottom: 0;
+            font-size: 12px !important;
+        }
+
+        .hear {
+            min-width: 120px !important;
+        }
+
+        .underline {
+            padding: 0;
+            vertical-align: bottom;
+        }
+    }
+
+    .box {
+        border: none;
+    }
+
+    #pledge:nth-of-type(even) {
+        page-break-after: always;
+    }
+}

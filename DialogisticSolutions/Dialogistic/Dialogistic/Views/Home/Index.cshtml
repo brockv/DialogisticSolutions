@@ -1,0 +1,52 @@
+﻿<!-- Views/Home/Index.cshtml -->
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1> .NET Group </h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"> </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Dialogistic Chat [@User.Identity.Name]
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li>
+                                <a href="http://www.jquery2dotnet.com">
+                                    <span class="glyphicon glyphicon-refresh">
+                                    </span>Refresh
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.jquery2dotnet.com">
+                                    <span class="glyphicon glyphicon-ok-sign">
+                                    </span>Available
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat" id="chat-body"></ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                                Send
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"> </div>
+    </div>
+</div>

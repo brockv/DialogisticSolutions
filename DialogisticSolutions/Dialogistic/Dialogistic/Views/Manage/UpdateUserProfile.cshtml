@@ -1,0 +1,125 @@
+﻿@model Dialogistic.Models.UpdateUserProfileViewModel
+
+@{
+    var userIsAdmin = User.IsInRole("Administrator") || User.IsInRole("SuperAdmin");
+}
+
+<section class="content-header">
+    <h2>
+        Profile Information
+    </h2>
+    <ol class="breadcrumb">
+        @if (userIsAdmin)
+        {
+            <li><a href="~/Admins/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        else
+        {
+            <li><a href="~/StandardUsers/Dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        }
+        <li><a href="~/Manage/Index">Account Settings Overview</a></li>
+        <li class="active">Profile Information</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content container-fluid">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Update Your Profile Information</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        @using (Html.BeginForm("UpdateUserProfile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+
+                <div class="box-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" id="file" name="file" class="form-control" accept=".jpg, .jpeg, .png, .gif, .bmp" />
+                            @ViewBag.Message
+                        </div>
+                    </div>
+
+                    @if (Model.SiteTheme != null)
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Current Theme</label>
+                            <div class="col-md-9" style="margin: 0;">
+                                <p style="margin: 0; padding-top: 7px;">@Model.SiteTheme</p>
+                            </div>
+                        </div>
+
+                    }
+
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.SiteTheme, htmlAttributes: new { @class = "control-label col-md-3" })
+
+                        <div class="col-md-9">
+                            <select class="form-control" id="SiteTheme" name="SiteTheme">
+                                <option selected="selected" disabled>-- Please select theme -- </option>
+                                <option value="Standard">Standard</option>
+                                <option value="Dark">Dark</option>
+                                <option value="Colorblind">Colorblind</option>
+                                <option disabled>90s</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grab the avatar for this model, if it exists -->
+                    @if (Model != null && Model.Avatar != null)
+                    {
+                        <div class="form-group">
+                            @Html.Label("Current Profile Picture", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-3">
+                                <img src=@Model.Avatar class="img-bordered" height="100" width="100" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" id="updateButton" class="btn btn-info">Update Profile Information</button>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        }
+    </div>
+    <!-- /.box -->
+</section>

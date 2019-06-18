@@ -1,0 +1,106 @@
+﻿@if (Request.IsAuthenticated)
+{
+    if (User.IsInRole("Administrator"))
+    {
+        using (Html.BeginForm("LogOff", "Admins", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- Add clock to user -->
+
+            <div class="clock" id="txt" style="color: white; text-align: center;"></div>
+
+            <!-- Add sidebar -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">NAVIGATION OPTIONS</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="~/Admins/ManageCallList"><i class="fa fa-phone-square"></i> <span>Manage Call List</span></a></li>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <li><a href="~/Admins/ManageAllUsers"><i class="fa fa-id-badge"></i> <span>Manage Users</span></a></li>
+                }
+                else
+                {
+                    <li><a href="~/Admins/ManageCallers"><i class="fa fa-id-badge"></i> <span>Manage Callers</span></a></li>
+                }
+                <li><a href="~/Constituents/Index"><i class="fa fa-group"></i> <span>Manage Constituents</span></a></li>
+                <li><a href="~/Admins/ReviewProposedConstituentChanges"><i class="fa fa-reorder"></i> <span>Review Constituent Changes</span></a></li>
+                <li><a href="~/Pledge/Print"><i class="fa fa-print"></i> <span>Print Pledges</span></a></li>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                <li><a href="~/Constituents/New"><i class="fa fa-plus"></i> <span>Create New Constituent</span></a></li>
+                }                
+                <li><a href="~/User/Create"><i class="fa fa-user-plus"></i> <span>Create New User</span></a></li>
+                <li><a href="~/Manage/Index"><i class="fa fa-gears"></i> <span>Settings</span></a></li>
+
+                <li><a href="~/Admins/HelpPage"><i class="fa fa-heart"></i> <span>Help</span></a></li>
+
+                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-chain-broken"></i> <span>Log Out</span> </a></li>
+            </ul>
+        }
+    }
+    else if (User.IsInRole("Standard"))
+    {
+        using (Html.BeginForm("LogOff", "StandardUsers", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- Add clock to user -->
+            <div class="clock" id="txt" style="color: white; text-align: center;"></div>
+            <!-- Add sidebar -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">NAVIGATION OPTIONS</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="~/StandardUsers/ViewCallList"><i class="fa fa-address-card"></i> <span>View Call List</span></a></li>
+                <li><a href="~/Constituents/Index"><i class="fa fa-group"></i> <span>View Constituents</span></a></li>
+                <li><a href="~/Manage/Index"><i class="fa fa-gears"></i> <span>Settings</span></a></li>
+
+                <li><a href="~/StandardUsers/HelpPage"><i class="fa fa-heart"></i> <span>Help</span></a></li>
+
+                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-chain-broken align-bottom"></i> <span>Log Out</span> </a></li>
+            </ul>
+
+        }
+    }
+}
+
+
+<!-- On load, start the time function -->
+<script>
+    $(document).ready(function () {
+        startTime();       
+    });
+
+    function startTime() {
+        // set variables
+        var today = new Date();
+        var hh = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        var h = hh;
+        var ampm = " AM";
+
+        m = checkTime(m);
+        s = checkTime(s);
+
+        if (h >= 12) {
+            h = hh - 12;
+            ampm = " PM";
+        }
+
+        if (h == 0) {
+            h = 12;
+        }
+
+
+        // add to innerHTML
+        document.getElementById('txt').innerHTML = h + ":" + m + ":" + s + "" + ampm;
+        var t = setTimeout(startTime, 500);
+    }
+    // check the time and if it's less than 10, add a zero in front
+    function checkTime(i) {
+        if (i < 10) {
+            // add zero in front of numbers < 10
+            i = "0" + i
+        };
+        return i;
+    }
+</script>

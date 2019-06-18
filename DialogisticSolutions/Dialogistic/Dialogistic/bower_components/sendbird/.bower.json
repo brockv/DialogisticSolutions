@@ -1,0 +1,32 @@
+{
+  "name": "sendbird",
+  "version": "3.0.97",
+  "authors": [
+    "SendBird <support@sendbird.com>"
+  ],
+  "homepage": "https://github.com/smilefam/SendBird-SDK-JavaScript",
+  "description": "SendBird JavaScript SDK",
+  "main": "SendBird.min.js",
+  "moduleType": [],
+  "keywords": [
+    "sendbird",
+    "sendbird.com",
+    "messaging",
+    "chat",
+    "js"
+  ],
+  "license": "LICENSE.md",
+  "ignore": [
+    "package.json"
+  ],
+  "_release": "3.0.97",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.97",
+    "commit": "40b57d9f304786f778d3db09a8a0f473d7189aa2"
+  },
+  "_source": "https://github.com/smilefam/SendBird-SDK-JavaScript.git",
+  "_target": "v3.0.97",
+  "_originalSource": "sendbird",
+  "_direct": true
+}

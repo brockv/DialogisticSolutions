@@ -1,0 +1,598 @@
+﻿@model Dialogistic.Models.Constituent
+
+@{
+    /* Assign the primary phone number as the default number to call, and put it 
+     * it in the right format for Twilio */
+    var numberToCall = Model.PhoneNumber.Replace("-", "");
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<section class="content-header">
+    <h1>
+        Call This Constituent
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="~/StandardUsers/Dashboard"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="~/StandardUsers/ViewCallList">View Call List</a></li>
+        <li class="active">Call Constituent</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="the-content" id="the-content">
+    <!-- Horizontal Form -->
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h4 class="box-title"></h4>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div>
+                    <div class="col-md-4 col-md-push-8">
+                        <div class="panel panel-primary client-controls">
+                            <div class="panel-heading bg-purple">
+                                <h3 class="panel-title">Call Controls</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p><strong>Connection Status</strong></p>
+                                <div class="well well-sm" id="call-status">
+                                    Connecting to Twilio...
+                                </div>
+
+                                <!-- Call Control buttons  -->
+                                <div style="padding-bottom: 10px;">
+                                    <button id="callButton" onclick="callConstituent(@numberToCall)" type="button" class="btn btn-primary btn-lg call-constituent-button">
+                                        <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                        Call Constituent
+                                    </button>
+                                    <button class="btn btn-lg btn-danger hangup-button" disabled onclick="hangUp()">Hang up</button>
+                                </div>
+                                
+                                <div style="padding-top: 10px;">
+                                    <select name="constituentNumber" class="form-control" onchange="updateNumberToCall(this.value)">
+                                        <option value="@Model.PhoneNumber">Primary Number</option>
+                                        @if (Model.MobilePhoneNumber != null && Model.MobilePhoneNumber != "")
+                                        {
+                                            <option value="@Model.MobilePhoneNumber">Mobile Number</option>
+                                        }
+                                        @if (Model.AlternatePhoneNumber != null && Model.AlternatePhoneNumber != "")
+                                        {
+                                            <option value="@Model.AlternatePhoneNumber">Alt. Number</option>
+                                        }
+                                    </select>
+                                </div>
+                                <script>
+                                    function updateNumberToCall(number) {
+                                        numberToCall = number.replace(/-/g, '');
+                                        var clickFunction = $("#callButton").attr("onClick");
+                                        var functionName = clickFunction.substring(0, clickFunction.indexOf("("));
+                                        $("#callButton").attr("onclick", functionName + "(" + numberToCall + ")");
+                                    }
+                                </script>
+                                <!-- /Call Control buttons  -->
+                            </div>
+                                <div id="result_div" style="display: none">
+                                    <div class="panel-heading bg-purple">
+                                        <h3 class="panel-title"> Constituent Response</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            @using (Html.BeginForm("GetNextCallAssignment", "Voice", FormMethod.Get))
+                                            {
+                                                <input type="hidden" id="id" name="id" value="@Model.ConstituentID" />
+                                                <div>
+
+                                                    <h8> Constituent Call Outcome</h8>
+                                                    <select name="callOutcome" onchange="showCreditCard(this)">
+                                                        <option value="">None Selected</option>
+                                                        <option value="Pledge">Specified Mail-Out Pledge</option>
+                                                        <option value="specified cc pledged">Specified Credit Card Pledge</option>
+                                                        <option value="already pledged">Already Pledged</option>
+                                                        <option value="unspecified pledged">Unspecified Pledge</option>
+                                                        <option value="no pledge">No Pledge</option>
+                                                        <option value="call back later">Call Back Later</option>
+                                                        <option value="daytime callback">Daytime Callback</option>
+                                                        <option value="out of the country">Out of the Country</option>
+                                                        <option value="whereabouts unknown">Whereabouts Unknown</option>
+                                                        <option value="no english">No English</option>
+                                                        <option value="not available">Not Available</option>
+                                                        <option value="no answer">No Answer</option>
+                                                        <option value="busy">Busy</option>
+                                                        <option value="answering machine">Answering Machine</option>
+                                                        <option value="disconnect">Disconnect</option>
+                                                        <option value="fax number">Fax Number</option>
+                                                        <option value="privacy manager">Privacy Manager</option>
+                                                        <option value="do not call">Do Not Call</option>
+                                                        <option value="remove from list">Remove From List</option>
+                                                        <option value="reassigned number">Reassigned Number</option>
+                                                        <option value="deceased">Deceased</option>
+                                                    </select>
+                                                </div>
+                                                <input type="submit" id="FirstSubmitButton" class="btn btn-reddit" value="Submit" />
+                                            }
+                                            <!-- TAKE PAYMENT THROUGH STRIPE -->
+                                            <div class="row stripe-container" id="hidden_div" style="display: none">
+                                                <div class="col-sm-4">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" style="margin-left:15px;" data-toggle="modal" data-target="#pmtModal" data-backdrop="static">Take Payment</button>
+                                                </div>
+
+                                                <div class="col-sm-8">@Html.TextBox("Amount", null, new { @type = "number", @class = "form-control", @min = "0", placeholder = "Pledge Amount: $" })</div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-8 col-md-pull-4">
+                        <div class="panel-heading bg-purple">
+                            <h3 class="panel-title"> Constituent Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><u><em>Personal information</em></u></h6>
+
+                                    @if (Model.PreferredAddressLine1 != null && Model.PreferredAddressLine1 != "")
+                                    {
+                                        <div id="map"></div>
+                                    }
+                                    <p><strong>Name: </strong> @Model.PrimaryAddressee</p>
+                                    <p><strong>Phone number: </strong> @Model.PhoneNumber</p>
+
+                                    @if (Model.MobilePhoneNumber != null && Model.MobilePhoneNumber != "")
+                                    {
+                                        <p><strong>Mobile number: </strong> @Model.MobilePhoneNumber</p>
+                                    }
+
+                                    @if (Model.AlternatePhoneNumber != null && Model.AlternatePhoneNumber != "")
+                                    {
+                                        <p><strong>Alt. number: </strong> @Model.AlternatePhoneNumber</p>
+                                    }
+
+                                    @if (Model.PreferredAddressLine1 != null && Model.PreferredAddressLine1 != "")
+                                    {
+
+                                        <label><strong>Address:</strong></label>
+                                        <p>@Model.PreferredAddressLine1 <br /> @Model.PreferredCity @Model.PreferredState, @Model.PreferredZIP</p>
+
+                                        if (Model.Latitude != null && Model.Longitude != null)
+                                        {
+                                            <script>
+                                                mapboxgl.accessToken = 'pk.eyJ1IjoiY2FlY3VzIiwiYSI6ImNqdmw1eTgzbjB5dXQ0NHFyeXU2Z3czajAifQ.cT_98KEDesgr14FFbPaJ3w';
+                                                var map = new mapboxgl.Map({
+                                                    container: 'map', // container id
+                                                    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+                                                    center: [@Model.Longitude,@Model.Latitude], // starting position [lng, lat]
+                                                    zoom: 13 // starting zoom
+                                                });
+
+                                                // Once the map is loaded, add all the markers
+                                                map.on('load', function () {
+                                                    var marker = new mapboxgl.Marker()
+                                                            .setLngLat([@Model.Longitude,@Model.Latitude])
+                                                        .addTo(map);
+
+                                                });
+                                            </script>
+                                        }
+
+                                    }
+
+                                    <!-- Modal placeholder for updating Constituent information -->
+                                    <div id="modal-placeholder"></div>
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#updateInformation" data-url="@Url.Action("ProposeConstituentChanges", "Constituents", new { id = Model.ConstituentID })">
+                                        Update Constituent Information
+                                    </button>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div>
+                                        <h6><u><em>Yearly Report:</em></u></h6>
+                                        <canvas id="ConstituentReport"></canvas>
+                                    </div>
+                                    <h6><u><em>Donation History</em></u></h6>
+                                    <p><strong>Constituent ID:</strong> @Model.ConstituentID</p>
+                                    <p><strong>Donation Status: </strong> @Model.DonationStatus</p>
+                                    <p><strong>University Relationship: </strong> @Model.UniversityRelationship</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6><u><em>Call Log</em></u></h6>
+
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Call Answered</th>
+                                                <th>Outcome</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.CallLog)
+                                            {
+                                                <tr>
+                                                    <td>@item.DateOfCall.ToString("dd MMM yyyy")</td>
+                                                    <td>@(item.CallAnswered ? "Yes" : "No")</td>
+                                                    <td>@item.CallOutcome</td>
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><em><u>Gift Records</u></em></h6>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Gift Type</th>
+                                                <th>Recipient</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Gifts)
+                                            {
+                                                <tr>
+                                                    <td>@item.CallLog.DateOfCall.ToString("dd MMM yyyy")</td>
+
+                                                    <td>@item.GiftAmount</td>
+
+                                                    <td>@item.GiftType</td>
+
+                                                    <td>@item.GiftRecipient</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+
+<!-- CALL OUTCOME SECTION -->
+<section>  
+    <!-- TAKE PAYMENT THROUGH STRIPE -->
+    <div class="row" id="hidden_div" style="display: none">
+        <div class="col-md-2">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" style="margin-left:15px;" data-toggle="modal" data-target="#pmtModal" data-backdrop="static">Take Payment</button>
+        </div>
+        <div class="col-sm-6">@Html.TextBox("Amount", null, new { @type = "number", @class = "form-control", @min = "0", placeholder = "Pledge Amount: $" })</div>
+        <div class="col-sm-4"></div>
+    </div>
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div class="row">
+            <div class="alert alert-success" role="alert">
+     
+                @ViewBag.Message
+            </div>
+        
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                Text Here Voice
+            </div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="row">
+            <div class="alert alert-warning" role="alert">
+                @ViewBag.ErrorMessage
+
+            </div>
+        </div>
+    }
+
+    <!-- The Modal -->
+    <div class="modal" id="pmtModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Payment Information</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/Pledge/Charge" method="post" id="payment-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name As Appears On Card">
+                        </div>
+                        <div class="form-group">
+                            <label for="pledgeAmount">Pledge Amount</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input id="pledgeAmount" class="form-control" type="number" name="pledgeAmount" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="card-element">
+                                Credit or debit card
+                            </label>
+                            <div id="card-element" style="width: 30em; height: 3em;">
+                                <!-- A Stripe Element will be inserted here. -->
+                            </div>
+
+                            <!-- Used to display Element errors. -->
+                            <div id="card-errors" style="width: 30em; height: 2em;" role="alert"></div>
+                        </div>
+
+                        <button>Submit Payment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CALLER PROMPT SECTION -->
+    <!-- Modal -->
+    <div class="modal fade centered-modal" id="callerPromptModal" aria-labelledby="modalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="callerPromptCenterTitle">End-of-Call Prompt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The call with @Model.PrimaryAddressee has ended. Mark complete?
+                    <div>
+                        <hr />
+                        <p>
+                            <small>
+                                Marking this complete will remove the associated Call Assignment from your Call List.
+                            </small>
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Mark incomplete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="markCallAsCompleted()">Mark complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EMAIL PROMPT SECTION -->
+    <!-- Modal -->
+    <div class="modal fade centered-modal" id="emailPromptModal" aria-labelledby="modalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailPromptCenterTitle">Email Prompt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Would you like to send @Model.PrimaryAddressee a 'thank you' email?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="sendEmail()">Send email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Twilio Programmable Voice -->
+    <script type="text/javascript" src="//media.twiliocdn.com/sdk/js/client/v1.6/twilio.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/myScript.js"></script>
+    @Scripts.Render("~/bundles/browser-calls")
+
+    <script type="text/javascript">
+    /*
+     * This function was moved from the external JavaScript file in order to get easy
+     * access to the Constituent's ID, in order to remove them from the Caller's list
+     * of call assignments.
+     * */
+
+    /* End a call */
+    function hangUp() {
+        // Disconnect the device
+        Twilio.Device.disconnectAll();        
+    }
+
+    /* Callback for when a call ends */
+    Twilio.Device.disconnect(function (connection) {
+        // Disable the hangup button and enable the call button
+        hangUpButton.prop("disabled", true);
+        callConstituentButton.prop("disabled", false);
+
+        updateCallStatus("Ready");
+
+        // Display the prompt in a modal window
+        $('#callerPromptModal').modal('show');
+
+        document.getElementById('result_div').style.display = "block";
+    });
+
+    function markCallAsCompleted() {
+        // AJAX call to remove the Constituent from the Caller's call assignments
+        $.ajax({
+            type: "GET",
+            dataType: "int",
+            url: "/StandardUsers/RemoveCallAssignment",
+            data: { "id": @Model.ConstituentID },
+            success: $('#emailPromptModal').modal('show')
+        });
+    }
+
+    function sendEmail() {
+        // AJAX call that starts the email process for the Constituent
+        $.ajax({
+            type: "GET",
+            dataType: "int",
+            url: "/StandardUsers/GetConstituentID",
+            data: { "id": @Model.ConstituentID },
+            success: showConfirmation()
+        });
+
+        function showConfirmation() {
+            $('#emailPromptModal').modal('hide')
+            alert("Email successfully sent.")
+        }
+    }
+    </script>
+
+    <script>
+        function showCreditCard(select) {
+            if (select.value == "specified cc pledged") {
+                document.getElementById('FirstSubmitButton').style.display = "none";
+                document.getElementById('hidden_div').style.display = "block";
+
+            }
+
+            else if (select.value == "Pledge") {
+                document.getElementById('FirstSubmitButton').style.display = "block";
+                document.getElementById('hidden_div').style.display = "none";
+            }
+
+            else {
+                document.getElementById('hidden_div').style.display = "none";
+            }
+
+
+        }
+    </script>
+    <script>
+        $(function () {
+            // pass in as string literal to config manager to get public key
+            var stripe = Stripe('@System.Configuration.ConfigurationManager.AppSettings["StripePublishableKey"]');
+            var elements = stripe.elements();
+            var style =
+            {
+                base:
+                {
+                    // Add base input styles
+                    fontSize: '16px',
+                    color: "#32325d",
+                }
+            };
+            $('#pmtModal').on('show.bs.modal',
+                function (event) {
+                    $('#pledgeAmount').val($('#Amount').val());
+                });
+            // Create an instance of the card Element.
+            var card = elements.create('card', { style: style });
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+            card.addEventListener('change', function (event) {
+                // Display error if card doesn't work
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                }
+                else {
+                    displayError.textContent = '';
+                }
+            });
+
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        // Inform the user that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    }
+                    else {
+                        // Send the token to the server.
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                console.log(token);
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
+            }
+        });
+
+
+    </script>
+</section>
+
+@section scripts {
+    <script src="~/Scripts/Chart.js"></script>
+
+    <script>
+
+        //----Yearly Report Chart---------
+        var c = document.getElementById("ConstituentReport");
+        var ctx = c.getContext("2d");
+        var tData = $.getValues("/Voice/GetConstituentReport/" + @Model.ConstituentID);
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: tData
+        });
+
+    </script>
+
+
+    <script>
+
+        function callLogExpand() {
+            var x = document.getElementById("callLogExpand");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+
+    <script>
+
+        function donationLogExpand() {
+            var x = document.getElementById("donationLogExpand");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+}
