@@ -52,7 +52,7 @@ Feel free to look over our ERD
 ![ERD](https://bitbucket.org/floatnone/float-none/raw/20a4b0a988f6c9b89422c08e29a6333814c03429/milestones/Final_ERD.png)
 
 ### Current Deployment ###
-You can find a live-version of our site at [Dialogisitic](https://dialogistic.azurewebsites.net/)
+You can find a live-version of our site at ~~[Dialogisitic]~~ (The site is no longer up)
 
 You can also see the project in action on [YouTube](https://youtu.be/6RrkngDSGdI) (no audio)
 
