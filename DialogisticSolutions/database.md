@@ -56,4 +56,4 @@ if (newUserOne.Succeeded)
 * Run the application again and try to sign in with the SuperAdmin account. If successful, navigate to the Import page, and import the provided CSV file.
 
 ## Step 8
-• Comment out the INSERT statement from Step 6, and uncomment the INSERT statement for the CallAssignments. Change the CallerID fields to match your user's UserID's. There can be duplicate CallerID's, but not ConstituentID's.
+* Comment out the INSERT statement from Step 6, and uncomment the INSERT statement for the CallAssignments. Change the CallerID fields to match your user's UserID's. There can be duplicate CallerID's, but not ConstituentID's.
